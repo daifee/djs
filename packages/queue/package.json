@@ -1,5 +1,5 @@
 {
-  "name": "@djs/linked-list",
+  "name": "@djs/queue",
   "packageManager": "yarn@3.2.4",
   "devDependencies": {
     "typescript": "^4.8.4"

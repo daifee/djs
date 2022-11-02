@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "lint": "yarn run lint:js",
-    "lint:js": "yarn eslint packages --ext .ts,.js"
+    "lint:js": "yarn eslint packages --ext .ts,.js",
+    "postinstall": "husky install",
+    "test": "echo 'no test'"
   },
   "workspaces": [
     "packages/*"
@@ -17,6 +19,8 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.3",
     "typescript": "*"
   }
 }

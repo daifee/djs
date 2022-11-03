@@ -6,11 +6,15 @@
   "scripts": {
     "lint": "yarn run lint:js",
     "lint:js": "yarn eslint packages --ext .ts,.js",
+    "lint:json": "yarn prettier --check **/*.json",
+    "lint:md": "yarn prettier --check **/*.md",
+    "beautify": "yarn prettier --write **.(json|md|yml)",
     "postinstall": "husky install",
-    "test": "echo 'no test'"
+    "test": "yarn run lint"
   },
   "lint-staged": {
-    "*.(js|ts)": "yarn eslint"
+    "*.(js|ts)": "yarn eslint",
+    "*.(json|md|yml)": "yarn prettier --check"
   },
   "workspaces": [
     "packages/*"
@@ -24,6 +28,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "husky": "^8.0.0",
     "lint-staged": "^13.0.3",
+    "prettier": "2.7.1",
     "typescript": "*"
   }
 }

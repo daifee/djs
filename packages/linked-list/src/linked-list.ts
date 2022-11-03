@@ -3,7 +3,7 @@ import LinkedNode from './linked-node';
 export default class LinkedList<D> {
   protected head: LinkedNode<D> | null = null;
 
-  constructor (value?: D[]) {
+  constructor(value?: D[]) {
     if (value != null) {
       value.forEach((data) => {
         this.add(data);
@@ -11,11 +11,11 @@ export default class LinkedList<D> {
     }
   }
 
-  isEmpty (): boolean {
+  isEmpty(): boolean {
     return this.head == null;
   }
 
-  size (): number {
+  size(): number {
     let result = 0;
 
     this.each(() => {
@@ -26,7 +26,7 @@ export default class LinkedList<D> {
   }
 
   // 插入 add
-  addFirst (data: D): boolean {
+  addFirst(data: D): boolean {
     const node = new LinkedNode(data);
 
     if (this.head == null) {
@@ -40,7 +40,7 @@ export default class LinkedList<D> {
     return true;
   }
 
-  addLast (data: D): boolean {
+  addLast(data: D): boolean {
     if (this.isEmpty()) {
       return this.addFirst(data);
     }
@@ -56,9 +56,9 @@ export default class LinkedList<D> {
     return true;
   }
 
-  add (data: D): boolean;
-  add (index: number, data: D): boolean;
-  add (index: number | D, data?: D): boolean {
+  add(data: D): boolean;
+  add(index: number, data: D): boolean;
+  add(index: number | D, data?: D): boolean {
     if (data === undefined) {
       return this.addLast(index as D);
     }
@@ -91,7 +91,7 @@ export default class LinkedList<D> {
   }
 
   // 移除 remove
-  removeFirst (): boolean {
+  removeFirst(): boolean {
     if (this.isEmpty()) {
       return false;
     }
@@ -102,14 +102,14 @@ export default class LinkedList<D> {
     return true;
   }
 
-  removeLast (): boolean {
+  removeLast(): boolean {
     if (this.isEmpty()) {
       return false;
     }
 
     let prev: LinkedNode<D> | null = null;
     let last = this.head;
-    while ((last?.next) != null) {
+    while (last?.next != null) {
       prev = last;
       last = last.next;
     }
@@ -123,7 +123,7 @@ export default class LinkedList<D> {
     return true;
   }
 
-  remove (index: number): boolean {
+  remove(index: number): boolean {
     if (index === 0) {
       return this.removeFirst();
     }
@@ -136,13 +136,13 @@ export default class LinkedList<D> {
     let target = prev.next;
     let i = 1;
 
-    while (((target?.next) != null) && i !== index) {
+    while (target?.next != null && i !== index) {
       prev = target;
       target = target.next;
       i += 1;
     }
 
-    if ((target != null) && i === index) {
+    if (target != null && i === index) {
       prev.next = target.next;
       return true;
     }
@@ -151,32 +151,32 @@ export default class LinkedList<D> {
   }
 
   // 检索 get
-  get (index: number): D | undefined {
+  get(index: number): D | undefined {
     if (this.isEmpty()) {
       return undefined;
     }
 
     let i = 0;
     let curr = this.head;
-    while (((curr?.next) != null) && i !== index) {
+    while (curr?.next != null && i !== index) {
       i += 1;
       curr = curr.next;
     }
 
-    if (i === index && (curr != null)) {
+    if (i === index && curr != null) {
       return curr.data;
     }
 
     return undefined;
   }
 
-  getFirst (): D | undefined {
+  getFirst(): D | undefined {
     return this.head?.data;
   }
 
-  getLast (): D | undefined {
+  getLast(): D | undefined {
     let last = this.head;
-    while ((last?.next) != null) {
+    while (last?.next != null) {
       last = last.next;
     }
 
@@ -184,7 +184,7 @@ export default class LinkedList<D> {
   }
 
   // 遍历 each
-  each (callback: (item: D, index: number) => void): void {
+  each(callback: (item: D, index: number) => void): void {
     let curr = this.head;
     let index = 0;
     while (curr != null) {
@@ -194,7 +194,7 @@ export default class LinkedList<D> {
     }
   }
 
-  toArray (): D[] {
+  toArray(): D[] {
     if (this.isEmpty()) return [];
 
     const result: D[] = [];

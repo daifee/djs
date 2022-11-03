@@ -1,18 +1,20 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true
-    },
-    "extends": "standard-with-typescript",
-    "overrides": [
-    ],
-    "parserOptions": {
-        "project": "./tsconfig.eslint.json",
-        "ecmaVersion": "latest",
-        "sourceType": "module"
-    },
-    "rules": {
-      "@typescript-eslint/semi": ["error", "always"],
-      "semi": ["error", "always"]
-    }
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": "standard-with-typescript",
+  "overrides": [],
+  "parserOptions": {
+    "project": "./tsconfig.eslint.json",
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {
+    "@typescript-eslint/semi": ["error", "always"],
+    "semi": ["error", "always"],
+
+    "space-before-function-paren": ["error", "never"],
+    "@typescript-eslint/space-before-function-paren": ["error", "never"]
+  }
 }

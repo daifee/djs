@@ -1,4 +1,3 @@
-
 import LinkedNode from './linked-node';
 
 export default class LinkedList<D> {

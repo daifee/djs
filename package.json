@@ -9,6 +9,9 @@
     "postinstall": "husky install",
     "test": "echo 'no test'"
   },
+  "lint-staged": {
+    "*.(js|ts)": "yarn eslint"
+  },
   "workspaces": [
     "packages/*"
   ],

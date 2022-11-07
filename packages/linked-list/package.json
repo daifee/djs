@@ -1,7 +1,19 @@
 {
   "name": "@djs/linked-list",
   "packageManager": "yarn@3.2.4",
+  "type": "module",
+  "scripts": {
+    "build": "rollup --config ./rollup.config.js",
+    "test": "exit 1"
+  },
+  "main": "./dist/linked-list.cjs.js",
+  "module": "./dist/linked-list.es.js",
   "devDependencies": {
+    "@rollup/plugin-typescript": "^9.0.2",
+    "rollup": "^3.2.5",
     "typescript": "^4.8.4"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   }
 }

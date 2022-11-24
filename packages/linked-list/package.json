@@ -13,11 +13,13 @@
   },
   "type": "module",
   "scripts": {
-    "build": "rollup --config ./rollup.config.js",
+    "build": "rollup --config ./rollup.config.js && yarn run generate:types",
+    "generate:types": "yarn tsc --declaration --emitDeclarationOnly --declarationDir ./dist ./src/*.ts",
     "test": "jest ./test/**/*.test.ts"
   },
   "main": "./dist/linked-list.cjs.js",
   "module": "./dist/linked-list.es.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "src"

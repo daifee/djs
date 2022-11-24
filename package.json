@@ -4,18 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "lint": "yarn run lint:js && yarn run lint:json && yarn run lint:md && yarn run lint:yml",
+    "lint": "yarn run lint:js",
     "lint:js": "eslint packages --ext .ts,.js",
-    "lint:json": "prettier --check **/(**|.**).json",
-    "lint:md": "prettier --check **/(**|.**).md",
-    "lint:yml": "prettier --check **/(**|.**).(yml|yaml)",
-    "prettier:check": "prettier --check ./",
-    "prettier:write": "prettier --write ./",
     "postinstall": "husky install"
   },
   "lint-staged": {
-    "*.(js|ts)": "yarn eslint",
-    "**/*": "yarn prettier --check --ignore-unknown"
+    "*.(js|ts)": "yarn eslint"
   },
   "workspaces": [
     "packages/*"

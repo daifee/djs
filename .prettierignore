@@ -1,3 +1,6 @@
 
 packages/*/dist
 packages/*/coverage
+
+*.(js|ts)
+package.json

@@ -16,9 +16,12 @@ jobs:
           node-version: 16
       - name: 开启corepack功能
         run: corepack enable
-      - name: packages/linked-list
+      - name: 项目
+        run: |
+          yarn install
+          yarn run lint
+      - name: 包 @daifee/linked-list
         run: |
           cd packages/linked-list
           yarn install
-          yarn run lint
           yarn run test

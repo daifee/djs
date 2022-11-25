@@ -1,5 +1,6 @@
 import typescript from '@rollup/plugin-typescript';
 import fs from 'node:fs';
+import del from 'rollup-plugin-delete';
 
 function readJSON(filePath) {
   const data = fs.readFileSync(filePath, 'utf-8');
@@ -22,5 +23,8 @@ export default {
       format: 'es'
     }
   ],
-  plugins: [typescript()]
+  plugins: [
+    typescript(),
+    del({ targets: ['dist/*'] })
+  ]
 };

@@ -1,5 +1,8 @@
 {
   "name": "@daifee/queue",
+  "scripts": {
+    "test": "echo success"
+  },
   "packageManager": "yarn@3.2.4",
   "devDependencies": {
     "typescript": "^4.8.4"

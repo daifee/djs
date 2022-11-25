@@ -1,0 +1,23 @@
+name: 集成
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: 检测
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检测代码
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: enable corepack
+        run: corepack enable
+      - name: packages/linked-list
+        run: |
+          cd packages/linked-list
+          yarn install
+          yarn run test

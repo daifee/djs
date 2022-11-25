@@ -1328,9 +1328,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@djs/linked-list@workspace:packages/linked-list":
+"@daifee/linked-list@workspace:packages/linked-list":
   version: 0.0.0-use.local
-  resolution: "@djs/linked-list@workspace:packages/linked-list"
+  resolution: "@daifee/linked-list@workspace:packages/linked-list"
   dependencies:
     "@babel/core": ^7.20.2
     "@babel/preset-env": ^7.20.2
@@ -1344,9 +1344,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@djs/queue@workspace:packages/queue":
+"@daifee/queue@workspace:packages/queue":
   version: 0.0.0-use.local
-  resolution: "@djs/queue@workspace:packages/queue"
+  resolution: "@daifee/queue@workspace:packages/queue"
   dependencies:
     typescript: ^4.8.4
   languageName: unknown

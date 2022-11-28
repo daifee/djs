@@ -1,10 +1,16 @@
-name: 集成
+name: linked-list
 
-on: [push, pull_request]
+on: 
+  push:
+    branches:
+      - linked-list
+
+env:
+  PACKAGE_PATH: 'packages/linked-list'
 
 jobs:
   test:
-    name: 测试代码
+    name: 测试
     runs-on: ubuntu-latest
     steps:
       - name: 检出代码
@@ -14,14 +20,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: 开启corepack功能
+      - name: 开启corepack
         run: corepack enable
-      - name: 项目
+      - name: 安装依赖
         run: |
+          cd $PACKAGE_PATH
           yarn install
-          yarn run lint
-      - name: 包 @daifee/linked-list
-        run: |
-          cd packages/linked-list
-          yarn install
-          yarn run test
+      - name: 运行测试脚本
+        run: yarn run test

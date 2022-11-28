@@ -27,4 +27,6 @@ jobs:
           cd $PACKAGE_PATH
           yarn install
       - name: 运行测试脚本
-        run: yarn run test
+        run: |
+          cd $PACKAGE_PATH
+          yarn run test

@@ -22,7 +22,7 @@ jobs:
         run: yarn run lint
 
   linked_list:
-    name: @daifee/linked-list
+    name: '@daifee/linked-list'
     needs: [lint]
     runs-on: ubuntu-latest
     env:

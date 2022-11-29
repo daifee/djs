@@ -1,3 +1,3 @@
 # djs
 
-![main branch](https://github.com/daifee/djs/actions/workflows/lint.yml/badge.svg)
+![main branch](https://github.com/daifee/djs/actions/workflows/ci.yml/badge.svg)

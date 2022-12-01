@@ -43,10 +43,28 @@ jobs:
         run: |
           cd $PACKAGE_PATH
           yarn test
-      - uses: codecov/codecov-action@v3
-        with: 
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./packages/linked-list/coverage/clover.xml
-          flags: unittests
-          fail_ci_if_error: true
-          verbose: true
+      - uses: actions/upload-artifact@v3
+        with:
+          name: linked-list-clover
+          path: ./packages/linked-list/coverage/clover.xml
+    
+  codecov:
+    name: Codecov
+    needs: [linked_list]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: linked-list-clover
+      - name: 列出文件
+        run: ls -R
+      
+  
+
+      # - uses: codecov/codecov-action@v3
+      #   with: 
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     files: ./packages/linked-list/coverage/clover.xml
+      #     flags: unittests
+      #     fail_ci_if_error: true
+      #     verbose: true

@@ -3,26 +3,26 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  # lint:
-  #   name: Lint
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16
-  #     - name: 开启corepack
-  #       run: corepack enable
-  #     - name: 安装依赖
-  #       run: yarn install
-  #     - name: 执行 lint 脚本
-  #       run: yarn run lint
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: 开启corepack
+        run: corepack enable
+      - name: 安装依赖
+        run: yarn install
+      - name: 执行 lint 脚本
+        run: yarn run lint
 
   linked_list:
     name: '@daifee/linked-list'
-    # needs: [lint]
+    needs: [lint]
     runs-on: ubuntu-latest
     env:
       # 包的根目录
@@ -38,7 +38,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: 开启corepack
+      - name: 开启 corepack
         run: corepack enable
       - name: 安装依赖
         run: |
@@ -48,34 +48,11 @@ jobs:
         run: |
           cd $ROOT_PATH
           yarn test
-      - uses: codecov/codecov-action@v3
+      - name: 上传Codecov
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ${{ steps.static.outputs.coverage_file }}
           flags: unittests
           fail_ci_if_error: true
           verbose: true
-
-    # demo:
-    #   name: DEMO
-    #   runs-on: ubuntu-latest
-    #   env:
-    #     PACKAGE_PATH: './packages/linked-list'
-    #   steps:
-    #     - uses: actions/checkout@v3
-    #       with:
-    #         fetch-depth: 0
-    #     - id: static
-    #       run: |
-    #         echo "root_path=${PACKAGE_PATH}" >> $GITHUB_OUTPUT
-    #         echo "coverage_file=${PACKAGE_PATH}/coverage/clover.xml" >> $GITHUB_OUTPUT
-    #     - name: 打印 steps.static.outputs
-    #       run: |
-    #         echo "root_path: ${{ steps.static.outputs.root_path }}"
-    #         echo "coverage_file: ${{ steps.static.outputs.coverage_file }}"
-    #     - name: ls
-    #       run: ls -al
-    #     - name: ls ~
-    #       run: ls -al ~
-    #     - name: ls root_path
-    #       run: ls -al ${{ steps.static.outputs.root_path }}

@@ -20,78 +20,62 @@ jobs:
   #     - name: 执行 lint 脚本
   #       run: yarn run lint
 
-  # linked_list:
-  #   name: '@daifee/linked-list'
-  #   # needs: [lint]
-  #   runs-on: ubuntu-latest
-  #   env:
-  #     PACKAGE_PATH: './packages/linked-list'
-  #   steps:
-  #     - id: ref
-  #       run: |
-  #         echo "package_path=${PACKAGE_PATH}" >> $GITHUB_OUTPUT
-  #         echo "coverage_file=${PACKAGE_PATH}/coverage/clover.xml" >> $GITHUB_OUTPUT
-  #     - uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16
-  #     - name: 开启corepack
-  #       run: corepack enable
-  #     - name: 安装依赖
-  #       run: |
-  #         cd $PACKAGE_PATH
-  #         yarn install
-  #     - name: 执行 test 脚本
-  #       run: |
-  #         cd $PACKAGE_PATH
-  #         yarn test
-  #     - uses: actions/upload-artifact@v3
-  #       with:
-  #         name: linked-list-clover
-  #         path: ./packages/linked-list/coverage/clover.xml
-
-  # codecov:
-  #   name: Codecov
-  #   needs: [linked_list]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/download-artifact@v3
-  #       with:
-  #         name: linked-list-clover
-  #         path: ./packages/linked-list/coverage
-  #     - name: 列出文件
-  #       run: ls -R
-
-  # - uses: codecov/codecov-action@v3
-  #   with:
-  #     token: ${{ secrets.CODECOV_TOKEN }}
-  #     files: ./packages/linked-list/coverage/clover.xml
-  #     flags: unittests
-  #     fail_ci_if_error: true
-  #     verbose: true
-
-  demo:
-    name: DEMO
+  linked_list:
+    name: '@daifee/linked-list'
+    # needs: [lint]
     runs-on: ubuntu-latest
     env:
-      PACKAGE_PATH: '~/packages/linked-list'
+      # 包的根目录
+      ROOT_PATH: './packages/linked-list'
     steps:
+      - id: static
+        run: |
+          echo "root_path=${ROOT_PATH}" >> $GITHUB_OUTPUT
+          echo "coverage_file=${ROOT_PATH}/coverage/clover.xml" >> $GITHUB_OUTPUT
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - id: static
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: 开启corepack
+        run: corepack enable
+      - name: 安装依赖
         run: |
-          echo "root_path=${PACKAGE_PATH}" >> $GITHUB_OUTPUT
-          echo "coverage_file=${PACKAGE_PATH}/coverage/clover.xml" >> $GITHUB_OUTPUT
-      - name: 打印 steps.static.outputs
+          cd $ROOT_PATH
+          yarn install
+      - name: 执行 test 脚本
         run: |
-          echo "root_path: ${{ steps.static.outputs.root_path }}"
-          echo "coverage_file: ${{ steps.static.outputs.coverage_file }}"
-      - name: ls
-        run: ls -al
-      - name: ls ~
-        run: ls -al ~
-      - name: ls root_path
-        run: ls -al ${{ steps.static.outputs.root_path }}
+          cd $ROOT_PATH
+          yarn test
+      - uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ${{ steps.static.outputs.coverage_file }}
+          flags: unittests
+          fail_ci_if_error: true
+          verbose: true
+
+    # demo:
+    #   name: DEMO
+    #   runs-on: ubuntu-latest
+    #   env:
+    #     PACKAGE_PATH: './packages/linked-list'
+    #   steps:
+    #     - uses: actions/checkout@v3
+    #       with:
+    #         fetch-depth: 0
+    #     - id: static
+    #       run: |
+    #         echo "root_path=${PACKAGE_PATH}" >> $GITHUB_OUTPUT
+    #         echo "coverage_file=${PACKAGE_PATH}/coverage/clover.xml" >> $GITHUB_OUTPUT
+    #     - name: 打印 steps.static.outputs
+    #       run: |
+    #         echo "root_path: ${{ steps.static.outputs.root_path }}"
+    #         echo "coverage_file: ${{ steps.static.outputs.coverage_file }}"
+    #     - name: ls
+    #       run: ls -al
+    #     - name: ls ~
+    #       run: ls -al ~
+    #     - name: ls root_path
+    #       run: ls -al ${{ steps.static.outputs.root_path }}

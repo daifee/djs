@@ -89,9 +89,9 @@ jobs:
         run: |
           echo "root_path: ${{ steps.static.outputs.root_path }}"
           echo "coverage_file: ${{ steps.static.outputs.coverage_file }}"
-      - name: ll
-        run: ll -al
-      - name: ll ~
-        run: ll -al ~
-      - name: ll root_path
-        run: ll -al ${{ steps.static.outputs.root_path }}
+      - name: ls
+        run: ls -al
+      - name: ls ~
+        run: ls -al ~
+      - name: ls root_path
+        run: ls -al ${{ steps.static.outputs.root_path }}

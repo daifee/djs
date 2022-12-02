@@ -3,6 +3,16 @@ name: CI
 on: [push, pull_request]
 
 jobs:
+  demo:
+    name: DEMO
+    runs-on: ubuntu-latest
+    env:
+      PACKAGE_PATH: './packages/linked-list'
+    steps:
+      - id: const
+        run: echo "package_path=${PACKAGE_PATH}" >> $GITHUB_OUTPUT
+      - name: 打印 steps.output
+        run: echo "hello ${{ steps.const.outputs.package_path }} world"
   # lint:
   #   name: Lint
   #   runs-on: ubuntu-latest
@@ -20,52 +30,50 @@ jobs:
   #     - name: 执行 lint 脚本
   #       run: yarn run lint
 
-  linked_list:
-    name: '@daifee/linked-list'
-    # needs: [lint]
-    runs-on: ubuntu-latest
-    env:
-      PACKAGE_PATH: './packages/linked-list'
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: 开启corepack
-        run: corepack enable
-      - name: 安装依赖
-        run: |
-          cd $PACKAGE_PATH
-          yarn install
-      - name: 执行 test 脚本
-        run: |
-          cd $PACKAGE_PATH
-          yarn test
-      - uses: actions/upload-artifact@v3
-        with:
-          name: linked-list-clover
-          path: ./packages/linked-list/coverage/clover.xml
-    
-  codecov:
-    name: Codecov
-    needs: [linked_list]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: linked-list-clover
-          path: ./packages/linked-list/coverage
-      - name: 列出文件
-        run: ls -R
-      
-  
+  # linked_list:
+  #   name: '@daifee/linked-list'
+  #   # needs: [lint]
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     PACKAGE_PATH: './packages/linked-list'
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16
+  #     - name: 开启corepack
+  #       run: corepack enable
+  #     - name: 安装依赖
+  #       run: |
+  #         cd $PACKAGE_PATH
+  #         yarn install
+  #     - name: 执行 test 脚本
+  #       run: |
+  #         cd $PACKAGE_PATH
+  #         yarn test
+  #     - uses: actions/upload-artifact@v3
+  #       with:
+  #         name: linked-list-clover
+  #         path: ./packages/linked-list/coverage/clover.xml
 
-      # - uses: codecov/codecov-action@v3
-      #   with: 
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     files: ./packages/linked-list/coverage/clover.xml
-      #     flags: unittests
-      #     fail_ci_if_error: true
-      #     verbose: true
+  # codecov:
+  #   name: Codecov
+  #   needs: [linked_list]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/download-artifact@v3
+  #       with:
+  #         name: linked-list-clover
+  #         path: ./packages/linked-list/coverage
+  #     - name: 列出文件
+  #       run: ls -R
+
+  # - uses: codecov/codecov-action@v3
+  #   with:
+  #     token: ${{ secrets.CODECOV_TOKEN }}
+  #     files: ./packages/linked-list/coverage/clover.xml
+  #     flags: unittests
+  #     fail_ci_if_error: true
+  #     verbose: true

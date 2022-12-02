@@ -9,10 +9,14 @@ jobs:
     env:
       PACKAGE_PATH: './packages/linked-list'
     steps:
-      - id: const
-        run: echo "package_path=${PACKAGE_PATH}" >> $GITHUB_OUTPUT
+      - id: env
+        run: |
+          echo "package_path=${PACKAGE_PATH}" >> $GITHUB_OUTPUT
+          echo "coverage_file=${PACKAGE_PATH}/coverage/clover.xml" >> $GITHUB_OUTPUT
       - name: 打印 steps.output
-        run: echo "hello ${{ steps.const.outputs.package_path }} world"
+        run: |
+          echo "hello ${{ steps.env.outputs.package_path }} world"
+          echo "hello ${{ steps.env.outputs.coverage_file }} world"
   # lint:
   #   name: Lint
   #   runs-on: ubuntu-latest

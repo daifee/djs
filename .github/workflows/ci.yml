@@ -3,20 +3,6 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  demo:
-    name: DEMO
-    runs-on: ubuntu-latest
-    env:
-      PACKAGE_PATH: './packages/linked-list'
-    steps:
-      - id: env
-        run: |
-          echo "package_path=${PACKAGE_PATH}" >> $GITHUB_OUTPUT
-          echo "coverage_file=${PACKAGE_PATH}/coverage/clover.xml" >> $GITHUB_OUTPUT
-      - name: 打印 steps.output
-        run: |
-          echo "hello ${{ steps.env.outputs.package_path }} world"
-          echo "hello ${{ steps.env.outputs.coverage_file }} world"
   # lint:
   #   name: Lint
   #   runs-on: ubuntu-latest
@@ -41,6 +27,10 @@ jobs:
   #   env:
   #     PACKAGE_PATH: './packages/linked-list'
   #   steps:
+  #     - id: ref
+  #       run: |
+  #         echo "package_path=${PACKAGE_PATH}" >> $GITHUB_OUTPUT
+  #         echo "coverage_file=${PACKAGE_PATH}/coverage/clover.xml" >> $GITHUB_OUTPUT
   #     - uses: actions/checkout@v3
   #       with:
   #         fetch-depth: 0
@@ -81,3 +71,27 @@ jobs:
   #     flags: unittests
   #     fail_ci_if_error: true
   #     verbose: true
+
+  demo:
+    name: DEMO
+    runs-on: ubuntu-latest
+    env:
+      PACKAGE_PATH: '~/packages/linked-list'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - id: static
+        run: |
+          echo "root_path=${PACKAGE_PATH}" >> $GITHUB_OUTPUT
+          echo "coverage_file=${PACKAGE_PATH}/coverage/clover.xml" >> $GITHUB_OUTPUT
+      - name: 打印 steps.static.outputs
+        run: |
+          echo "root_path: ${{ steps.static.outputs.root_path }}"
+          echo "coverage_file: ${{ steps.static.outputs.coverage_file }}"
+      - name: ll
+        run: ll -al
+      - name: ll ~
+        run: ll -al ~
+      - name: ll root_path
+        run: ll -al ${{ steps.static.outputs.root_path }}

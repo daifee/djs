@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: 16
           cache: 'yarn'
-          cache-dependency-path: 'packages/*/yarn.lock'
+          cache-dependency-path: './packages/**/yarn.lock'
       - name: 开启corepack
         run: corepack enable
       - name: 安装依赖
@@ -41,7 +41,7 @@ jobs:
         with:
           node-version: 16
           cache: 'yarn'
-          cache-dependency-path: 'packages/*/yarn.lock'
+          cache-dependency-path: './packages/**/yarn.lock'
       - name: 开启 corepack
         run: corepack enable
       - name: 安装依赖

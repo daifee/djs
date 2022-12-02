@@ -13,10 +13,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+          cache: 'yarn'
+          cache-dependency-path: 'packages/*/package-lock.json'
       - name: 开启corepack
         run: corepack enable
       - name: 安装依赖
-        run: yarn install
+        run: yarn install --immutable
       - name: 执行 lint 脚本
         run: yarn run lint
 
@@ -38,12 +40,14 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+          cache: 'yarn'
+          cache-dependency-path: 'packages/*/package-lock.json'
       - name: 开启 corepack
         run: corepack enable
       - name: 安装依赖
         run: |
           cd $ROOT_PATH
-          yarn install
+          yarn install --immutable
       - name: 执行 test 脚本
         run: |
           cd $ROOT_PATH

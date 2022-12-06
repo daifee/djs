@@ -1,12 +1,7 @@
 {
-  "name": "@daifee/template",
-  "version": "1.2.0",
-  "description": "template",
-  "keywords": [
-    "template",
-    "data structure"
-  ],
-  "homepage": "https://github.com/daifee/djs/tree/main/packages/template#readme",
+  "name": "@daifee/<%= name %>",
+  "version": "<%= version %>",
+  "homepage": "https://github.com/daifee/djs/tree/main/packages/<%= name %>#readme",
   "bugs": {
     "url": "https://github.com/daifee/djs/issues",
     "email": "mr_zhangjiayong@163.com"
@@ -16,8 +11,8 @@
     "build": "rollup --config ./rollup.config.js",
     "test": "jest ./test/**/*.test.ts"
   },
-  "main": "./dist/template.cjs",
-  "module": "./dist/template.mjs",
+  "main": "./dist/<%= name %>.cjs",
+  "module": "./dist/<%= name %>.mjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",

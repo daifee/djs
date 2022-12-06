@@ -1345,23 +1345,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@daifee/template@workspace:packages/template":
-  version: 0.0.0-use.local
-  resolution: "@daifee/template@workspace:packages/template"
-  dependencies:
-    "@babel/core": ^7.20.2
-    "@babel/preset-env": ^7.20.2
-    "@babel/preset-typescript": ^7.18.6
-    "@rollup/plugin-typescript": ^9.0.2
-    "@types/jest": ^29.2.2
-    babel-jest: ^29.3.1
-    jest: ^29.3.1
-    rollup: ^3.2.5
-    rollup-plugin-delete: ^2.0.0
-    typescript: ^4.8.4
-  languageName: unknown
-  linkType: soft
-
 "@eslint/eslintrc@npm:^1.3.3":
   version: 1.3.3
   resolution: "@eslint/eslintrc@npm:1.3.3"
@@ -2318,6 +2301,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"async@npm:^3.2.3":
+  version: 3.2.4
+  resolution: "async@npm:3.2.4"
+  checksum: 43d07459a4e1d09b84a20772414aa684ff4de085cbcaec6eea3c7a8f8150e8c62aa6cd4e699fe8ee93c3a5b324e777d34642531875a0817a35697522c1b02e89
+  languageName: node
+  linkType: hard
+
 "babel-jest@npm:^29.3.1":
   version: 29.3.1
   resolution: "babel-jest@npm:29.3.1"
@@ -2579,7 +2569,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^4.0.0":
+"chalk@npm:^4.0.0, chalk@npm:^4.0.2":
   version: 4.1.2
   resolution: "chalk@npm:4.1.2"
   dependencies:
@@ -2904,6 +2894,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@typescript-eslint/eslint-plugin": ^5.0.0
     babel-jest: ^29.3.1
+    ejs: ^3.1.8
     eslint: ^8.0.1
     eslint-config-standard-with-typescript: latest
     eslint-plugin-import: ^2.25.2
@@ -2939,6 +2930,17 @@ __metadata:
   version: 0.2.0
   resolution: "eastasianwidth@npm:0.2.0"
   checksum: 7d00d7cd8e49b9afa762a813faac332dee781932d6f2c848dc348939c4253f1d4564341b7af1d041853bc3f32c2ef141b58e0a4d9862c17a7f08f68df1e0f1ed
+  languageName: node
+  linkType: hard
+
+"ejs@npm:^3.1.8":
+  version: 3.1.8
+  resolution: "ejs@npm:3.1.8"
+  dependencies:
+    jake: ^10.8.5
+  bin:
+    ejs: bin/cli.js
+  checksum: 1d40d198ad52e315ccf37e577bdec06e24eefdc4e3c27aafa47751a03a0c7f0ec4310254c9277a5f14763c3cd4bbacce27497332b2d87c74232b9b1defef8efc
   languageName: node
   linkType: hard
 
@@ -3484,6 +3486,15 @@ __metadata:
   dependencies:
     flat-cache: ^3.0.4
   checksum: f49701feaa6314c8127c3c2f6173cfefff17612f5ed2daaafc6da13b5c91fd43e3b2a58fd0d63f9f94478a501b167615931e7200e31485e320f74a33885a9c74
+  languageName: node
+  linkType: hard
+
+"filelist@npm:^1.0.1":
+  version: 1.0.4
+  resolution: "filelist@npm:1.0.4"
+  dependencies:
+    minimatch: ^5.0.1
+  checksum: a303573b0821e17f2d5e9783688ab6fbfce5d52aaac842790ae85e704a6f5e4e3538660a63183d6453834dedf1e0f19a9dadcebfa3e926c72397694ea11f5160
   languageName: node
   linkType: hard
 
@@ -4235,6 +4246,20 @@ __metadata:
     html-escaper: ^2.0.0
     istanbul-lib-report: ^3.0.0
   checksum: 7867228f83ed39477b188ea07e7ccb9b4f5320b6f73d1db93a0981b7414fa4ef72d3f80c4692c442f90fc250d9406e71d8d7ab65bb615cb334e6292b73192b89
+  languageName: node
+  linkType: hard
+
+"jake@npm:^10.8.5":
+  version: 10.8.5
+  resolution: "jake@npm:10.8.5"
+  dependencies:
+    async: ^3.2.3
+    chalk: ^4.0.2
+    filelist: ^1.0.1
+    minimatch: ^3.0.4
+  bin:
+    jake: ./bin/cli.js
+  checksum: 56c913ecf5a8d74325d0af9bc17a233bad50977438d44864d925bb6c45c946e0fee8c4c1f5fe2225471ef40df5222e943047982717ebff0d624770564d3c46ba
   languageName: node
   linkType: hard
 

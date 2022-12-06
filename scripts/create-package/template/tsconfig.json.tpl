@@ -5,5 +5,6 @@
     "declaration": true,
     "declarationDir": "./dist"
   },
-  "include": ["./src"]
+  "include": ["./src"],
+  "typescript.validate.enable": false
 }

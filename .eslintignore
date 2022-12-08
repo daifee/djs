@@ -1,3 +1,5 @@
 
 packages/*/dist
 packages/*/coverage
+
+node_modules

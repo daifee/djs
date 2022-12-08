@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "bootstrap": "node ./scripts/bootstrap.js",
     "lint": "yarn run lint:js",
     "lint:js": "eslint packages --ext .ts,.js",
     "postinstall": "husky install"
@@ -33,7 +34,7 @@
     "prettier": "2.7.1",
     "typescript": "*"
   },
-  "packageManager": "yarn@3.2.4",
+  "packageManager": "yarn@3.3.0",
   "engines": {
     "node": ">=16.17.1"
   }

@@ -6,7 +6,6 @@ function executeCase(input: INPUT): number[] {
   const obj = new LinkedList<number>();
 
   input.forEach((item) => {
-    // @ts-expect-error
     obj[item[0]](...item[1]);
   });
 

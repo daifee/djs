@@ -9,9 +9,6 @@
 
 // import inquirer from 'inquirer';
 import { Command } from 'commander';
-import createPackage from './scripts/create-package/index.js';
-import removePackage from './scripts/remove-package.js';
-import bootstrap from './scripts/bootstrap.js';
 
 const program = new Command();
 
@@ -32,7 +29,9 @@ program
   .description('创建新包')
   .argument('<name>', DESCRIPTIONS.PACKAGE_NAME)
   .option('--version <version>', '版本号', '1.0.0')
-  .action(function (name, opts) {
+  .action(async function (name, opts) {
+    const { default: createPackage } = await import('./scripts/create-package/index.js');
+
     createPackage({ name, ...opts });
   });
 
@@ -43,7 +42,9 @@ program
   .command('remove-package')
   .description('移除旧包（删除目录）')
   .argument('<name>', DESCRIPTIONS.PACKAGE_NAME)
-  .action(function (name) {
+  .action(async function (name) {
+    const { default: removePackage } = await import('./scripts/remove-package.js');
+
     removePackage(name);
   });
 
@@ -53,7 +54,8 @@ program
 program
   .command('bootstrap')
   .description('项目引导')
-  .action(() => {
+  .action(async () => {
+    const { default: bootstrap } = await import('./scripts/bootstrap.js');
     bootstrap();
   });
 
@@ -63,4 +65,4 @@ program
 
 // 发布
 
-program.parse();
+program.parseAsync();

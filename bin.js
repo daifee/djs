@@ -6,11 +6,12 @@
  * - 执行构建
  * - 执行项目引导
  */
-import fs from 'node:fs';
+
 // import inquirer from 'inquirer';
 import { Command } from 'commander';
 import createPackage from './scripts/create-package/index.js';
-import { resolvePackagePath } from './scripts/utils.js';
+import removePackage from './scripts/remove-package.js';
+import bootstrap from './scripts/bootstrap.js';
 
 const program = new Command();
 
@@ -31,7 +32,7 @@ program
   .description('创建新包')
   .argument('<name>', DESCRIPTIONS.PACKAGE_NAME)
   .option('--version <version>', '版本号', '1.0.0')
-  .action(async function (name, opts) {
+  .action(function (name, opts) {
     createPackage({ name, ...opts });
   });
 
@@ -42,20 +43,24 @@ program
   .command('remove-package')
   .description('移除旧包（删除目录）')
   .argument('<name>', DESCRIPTIONS.PACKAGE_NAME)
-  .action(async function (name) {
-    const path = resolvePackagePath(name);
-    fs.rmSync(path, {
-      force: true,
-      recursive: true
-    });
+  .action(function (name) {
+    removePackage(name);
+  });
+
+/**
+ * 执行项目引导
+ */
+program
+  .command('bootstrap')
+  .description('项目引导')
+  .action(() => {
+    bootstrap();
   });
 
 // 测试
 
 // 构建
 
-// 引导
-
 // 发布
 
-program.parseAsync();
+program.parse();

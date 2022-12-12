@@ -8,7 +8,8 @@
     "lint:js": "eslint packages --ext .ts,.js",
     "postinstall": "husky install",
     "create-package": "node ./bin.js create-package",
-    "remove-package": "node ./bin.js remove-package"
+    "remove-package": "node ./bin.js remove-package",
+    "echo": "echo 233"
   },
   "lint-staged": {
     "*.(js|ts)": "yarn eslint"

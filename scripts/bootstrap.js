@@ -1,58 +1,32 @@
 #!/use/bin/env node
-import process from 'node:process';
-import { execSync } from 'node:child_process';
-import path from 'node:path';
-import { readFileSync } from 'node:fs';
 
-const ROOT_PATH = process.cwd();
+import {
+  execChildProcessSync,
+  workspaceExistsScript,
+  workspaceResolvePath,
+  workspacesForEach,
+  wrokspaceRunScript
+} from './utils.js';
 
-function getWorkspaces() {
-  const workspacesJSON = execSync('yarn workspaces list --json', {
-    cwd: ROOT_PATH,
-    encoding: 'utf-8'
+function install(workspace) {
+  const workspacePath = workspaceResolvePath(workspace);
+  console.log(workspace.name);
+  execChildProcessSync('yarn install', {
+    cwd: workspacePath
   });
-
-  const workspaces = workspacesJSON.split('\n')
-    .map((json) => {
-      try {
-        return JSON.parse(json);
-      } catch (err) {
-        return null;
-      }
-    })
-    .filter((obj) => {
-      return obj !== null;
-    });
-
-  return workspaces;
 }
 
-//
-getWorkspaces().forEach(build);
-
-function build({ location, name }) {
-  const cwd = path.resolve(ROOT_PATH, location);
-
-  if (checkBuildScript(cwd)) {
-    console.log(`cwd: ${cwd}`);
-    execSync('yarn run build', {
-      cwd,
-      stdio: ['pipe', process.stdout, process.stderr]
-    });
+function build(workspace) {
+  if (workspaceExistsScript(workspace)) {
+    console.log(workspace.name);
+    wrokspaceRunScript(workspace, 'build');
   }
 }
 
-function checkBuildScript(packageDir) {
-  const pkg = parseJSONFile(path.resolve(packageDir, 'package.json'));
+export default function bootstrap() {
+  // 安装依赖
+  workspacesForEach(install);
 
-  return !!pkg?.scripts?.build;
-}
-
-function parseJSONFile(filePath) {
-  const json = readFileSync(filePath, { encoding: 'utf-8' });
-  try {
-    return JSON.parse(json);
-  } catch (error) {
-    return null;
-  }
+  // 执行构建
+  workspacesForEach(build);
 }

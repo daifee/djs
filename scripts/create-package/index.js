@@ -1,11 +1,13 @@
 
 import path from 'node:path';
 import fs from 'node:fs';
-import process from 'node:process';
-import { execSync } from 'node:child_process';
 import ejs from 'ejs';
 
-import { ROOT_PATH, resolvePackagePath, resolveDirname } from '../utils.js';
+import {
+  resolvePackagePath,
+  resolveDirname,
+  execChildProcessSync
+} from '../utils.js';
 
 const DIRNAME = resolveDirname(import.meta.url);
 
@@ -20,10 +22,7 @@ export default function createPackage({ name, version = '1.0.0' } = {}) {
 
   // 复制模板
   // TODO: 存在跨平台问题
-  execSync(`cp -r ${srcPath} ${destPath}`, {
-    cwd: ROOT_PATH,
-    stdio: ['pipe', process.stdout, process.stderr]
-  });
+  execChildProcessSync(`cp -r ${srcPath} ${destPath}`);
   // 渲染模板文件
   [
     'package.json.tpl',
@@ -35,9 +34,8 @@ export default function createPackage({ name, version = '1.0.0' } = {}) {
     renderTplFile(filePath, { name, version });
   });
   // 安装依赖
-  execSync('yarn install', {
-    cwd: destPath,
-    stdio: ['pipe', process.stdout, process.stderr]
+  execChildProcessSync('yarn install', {
+    cwd: destPath
   });
 }
 

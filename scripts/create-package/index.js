@@ -1,21 +1,18 @@
 
 import path from 'node:path';
-import url from 'node:url';
 import fs from 'node:fs';
 import process from 'node:process';
 import { execSync } from 'node:child_process';
 import ejs from 'ejs';
 
-const ROOT_PATH = process.cwd();
+import { ROOT_PATH, resolvePackagePath, resolveDirname } from '../utils.js';
 
-function getDirname(importMetaURL) {
-  return path.dirname(url.fileURLToPath(importMetaURL));
-}
+const DIRNAME = resolveDirname(import.meta.url);
 
 export default function createPackage({ name, version = '1.0.0' } = {}) {
   // 路径
-  const srcPath = path.resolve(getDirname(import.meta.url), './template');
-  const destPath = path.resolve(ROOT_PATH, `packages/${name}`);
+  const srcPath = path.resolve(DIRNAME, './template');
+  const destPath = resolvePackagePath(name);
 
   if (fs.existsSync(destPath)) {
     throw new Error(`目录已经存在：${destPath}`);

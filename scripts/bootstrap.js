@@ -1,18 +1,12 @@
 
 import {
-  workspaceExistsScript,
   workspacesForeach,
-  wrokspaceRunCommand
+  wrokspaceRunCommand,
+  execChildProcessSync
 } from './utils.js';
 
 function install(workspace) {
-  wrokspaceRunCommand(workspace, 'yarn install');
-}
-
-function build(workspace) {
-  if (workspaceExistsScript(workspace, 'build')) {
-    wrokspaceRunCommand(workspace, 'yarn run build');
-  }
+  wrokspaceRunCommand(workspace, 'yarn install --immutable');
 }
 
 export default function bootstrap() {
@@ -20,5 +14,5 @@ export default function bootstrap() {
   workspacesForeach(install);
 
   // 执行构建
-  workspacesForeach(build);
+  execChildProcessSync('yarn run build');
 }

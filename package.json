@@ -7,9 +7,10 @@
     "build": "node ./bin.js workspaces-foreach 'yarn run build' --if-present --skip djs",
     "lint": "yarn run lint:js",
     "lint:js": "eslint packages --ext .ts,.js",
-    "postinstall": "husky install",
     "create-package": "node ./bin.js create-package",
-    "remove-package": "node ./bin.js remove-package"
+    "remove-package": "node ./bin.js remove-package",
+    "bootstrap": "node ./bin.js bootstrap",
+    "postinstall": "husky install"
   },
   "lint-staged": {
     "*.(js|ts)": "yarn eslint"

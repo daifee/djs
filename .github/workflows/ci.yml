@@ -21,19 +21,11 @@ jobs:
         run: yarn install --immutable
       - name: 执行 lint 脚本
         run: yarn run lint
-
-  linked_list:
-    name: '@daifee/linked-list'
-    needs: [lint]
+  
+  test:
+    name: Test
     runs-on: ubuntu-latest
-    env:
-      # 包的根目录
-      ROOT_PATH: './packages/linked-list'
     steps:
-      - id: static
-        run: |
-          echo "root_path=${ROOT_PATH}" >> $GITHUB_OUTPUT
-          echo "coverage_file=${ROOT_PATH}/coverage/clover.xml" >> $GITHUB_OUTPUT
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -42,60 +34,89 @@ jobs:
           node-version: 16
           cache: 'yarn'
           # cache-dependency-path: './packages/**/yarn.lock'
-      - name: 开启 corepack
+      - name: 开启corepack
         run: corepack enable
-      - name: 安装依赖
+      - name: 初始化项目
         run: |
-          cd $ROOT_PATH
           yarn install --immutable
+          yarn run bootstrap
       - name: 执行 test 脚本
-        run: |
-          cd $ROOT_PATH
-          yarn test
-      - name: 上传Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ${{ steps.static.outputs.coverage_file }}
-          flags: unittests
-          fail_ci_if_error: true
-          verbose: true
+        run: yarn run test
 
-  queue:
-    name: '@daifee/queue'
-    needs: [lint]
-    runs-on: ubuntu-latest
-    env:
-      # 包的根目录
-      ROOT_PATH: './packages/queue'
-    steps:
-      - id: static
-        run: |
-          echo "root_path=${ROOT_PATH}" >> $GITHUB_OUTPUT
-          echo "coverage_file=${ROOT_PATH}/coverage/clover.xml" >> $GITHUB_OUTPUT
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: 'yarn'
-          # cache-dependency-path: './packages/**/yarn.lock'
-      - name: 开启 corepack
-        run: corepack enable
-      - name: 安装依赖
-        run: |
-          cd $ROOT_PATH
-          yarn install --immutable
-      - name: 执行 test 脚本
-        run: |
-          cd $ROOT_PATH
-          yarn test
-      - name: 上传Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ${{ steps.static.outputs.coverage_file }}
-          flags: unittests
-          fail_ci_if_error: true
-          verbose: true
+  # linked_list:
+  #   name: '@daifee/linked-list'
+  #   needs: [lint]
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     # 包的根目录
+  #     ROOT_PATH: './packages/linked-list'
+  #   steps:
+  #     - id: static
+  #       run: |
+  #         echo "root_path=${ROOT_PATH}" >> $GITHUB_OUTPUT
+  #         echo "coverage_file=${ROOT_PATH}/coverage/clover.xml" >> $GITHUB_OUTPUT
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16
+  #         cache: 'yarn'
+  #         # cache-dependency-path: './packages/**/yarn.lock'
+  #     - name: 开启 corepack
+  #       run: corepack enable
+  #     - name: 安装依赖
+  #       run: |
+  #         cd $ROOT_PATH
+  #         yarn install --immutable
+  #     - name: 执行 test 脚本
+  #       run: |
+  #         cd $ROOT_PATH
+  #         yarn test
+  #     - name: 上传Codecov
+  #       uses: codecov/codecov-action@v3
+  #       with:
+  #         token: ${{ secrets.CODECOV_TOKEN }}
+  #         files: ${{ steps.static.outputs.coverage_file }}
+  #         flags: unittests
+  #         fail_ci_if_error: true
+  #         verbose: true
+
+  # queue:
+  #   name: '@daifee/queue'
+  #   needs: [lint]
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     # 包的根目录
+  #     ROOT_PATH: './packages/queue'
+  #   steps:
+  #     - id: static
+  #       run: |
+  #         echo "root_path=${ROOT_PATH}" >> $GITHUB_OUTPUT
+  #         echo "coverage_file=${ROOT_PATH}/coverage/clover.xml" >> $GITHUB_OUTPUT
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16
+  #         cache: 'yarn'
+  #         # cache-dependency-path: './packages/**/yarn.lock'
+  #     - name: 开启 corepack
+  #       run: corepack enable
+  #     - name: 安装依赖
+  #       run: |
+  #         cd $ROOT_PATH
+  #         yarn install --immutable
+  #     - name: 执行 test 脚本
+  #       run: |
+  #         cd $ROOT_PATH
+  #         yarn test
+  #     - name: 上传Codecov
+  #       uses: codecov/codecov-action@v3
+  #       with:
+  #         token: ${{ secrets.CODECOV_TOKEN }}
+  #         files: ${{ steps.static.outputs.coverage_file }}
+  #         flags: unittests
+  #         fail_ci_if_error: true
+  #         verbose: true

@@ -99,7 +99,11 @@ export function workspaceExistsScript(workspace, scriptName) {
   const file = path.resolve(workspaceResolvePath(workspace), 'package.json');
   const pkg = parseJsonFile(file);
 
-  return !!pkg?.scripts[scriptName];
+  if (pkg.scripts && pkg.scripts[scriptName]) {
+    return true;
+  }
+
+  return false;
 }
 
 function parseJsonFile(filePath) {

@@ -1,4 +1,4 @@
-#!/use/bin/env node
+import chalk from 'chalk';
 
 import {
   execChildProcessSync,
@@ -10,15 +10,17 @@ import {
 
 function install(workspace) {
   const workspacePath = workspaceResolvePath(workspace);
-  console.log(workspace.name);
+  const message = `\n↓ install: ${workspace.name}`;
+  console.log(chalk.blue(message));
   execChildProcessSync('yarn install', {
     cwd: workspacePath
   });
 }
 
 function build(workspace) {
-  if (workspaceExistsScript(workspace)) {
-    console.log(workspace.name);
+  if (workspaceExistsScript(workspace, 'build')) {
+    const message = `\n↓ build: ${workspace.name}`;
+    console.log(chalk.blue(message));
     wrokspaceRunScript(workspace, 'build');
   }
 }

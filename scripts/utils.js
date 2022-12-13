@@ -4,6 +4,7 @@ import path from 'node:path';
 import url from 'node:url';
 import { execSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
+import chalk from 'chalk';
 
 export const ROOT_PATH = process.cwd();
 
@@ -17,11 +18,16 @@ export const SCOPE = '@daifee';
  * - stdio: `['pipe', process.stdout, process.stderr]`
  */
 export function execChildProcessSync(command, options = {}) {
-  return execSync(command, {
+  const opts = {
     cwd: ROOT_PATH,
     stdio: ['pipe', process.stdout, process.stderr],
     ...options
-  });
+  };
+
+  console.log(chalk.blue('\n➤ execSync'));
+  console.log(chalk.blue(`${opts.cwd}$ ${command}`));
+
+  return execSync(command, opts);
 }
 
 /**
@@ -64,7 +70,7 @@ export function workspacesList() {
  * @param {(workspace: Workspace) => void} cb 回调函数
  * @returns
  */
-export function workspacesForEach(cb) {
+export function workspacesForeach(cb) {
   return workspacesList().forEach(cb);
 }
 
@@ -73,10 +79,10 @@ export function workspacesForEach(cb) {
  * @param {Workspace} workspace 工作空间
  * @param {stirng} script 脚本名称`pkg.scripts[script]`
  */
-export function wrokspaceRunScript(workspace, script) {
+export function wrokspaceRunCommand(workspace, command) {
   const dir = workspaceResolvePath(workspace);
 
-  execChildProcessSync(`yarn run ${script}`, {
+  execChildProcessSync(command, {
     cwd: dir
   });
 }
@@ -148,7 +154,7 @@ export function resolvePackagePath(name) {
 
   const packageName = resolvePackageName(name);
   let workspace = null;
-  workspacesForEach((item) => {
+  workspacesForeach((item) => {
     if (item.name === packageName) {
       workspace = item;
     }

@@ -3,13 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "bootstrap": "node ./scripts/bootstrap.js",
+    "test": "node ./bin.js workspaces-foreach 'yarn run test' --if-present --skip djs",
+    "build": "node ./bin.js workspaces-foreach 'yarn run build' --if-present --skip djs",
     "lint": "yarn run lint:js",
     "lint:js": "eslint packages --ext .ts,.js",
     "postinstall": "husky install",
     "create-package": "node ./bin.js create-package",
-    "remove-package": "node ./bin.js remove-package",
-    "echo": "echo 233"
+    "remove-package": "node ./bin.js remove-package"
   },
   "lint-staged": {
     "*.(js|ts)": "yarn eslint"

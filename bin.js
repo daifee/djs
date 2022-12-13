@@ -30,7 +30,9 @@ program
   .argument('<name>', DESCRIPTIONS.PACKAGE_NAME)
   .option('--version <version>', '版本号', '1.0.0')
   .action(async function (name, opts) {
-    const { default: createPackage } = await import('./scripts/create-package/index.js');
+    const {
+      default: createPackage
+    } = await import('./scripts/create-package/index.js');
 
     createPackage({ name, ...opts });
   });
@@ -43,7 +45,9 @@ program
   .description('移除旧包（删除目录）')
   .argument('<name>', DESCRIPTIONS.PACKAGE_NAME)
   .action(async function (name) {
-    const { default: removePackage } = await import('./scripts/remove-package.js');
+    const {
+      default: removePackage
+    } = await import('./scripts/remove-package.js');
 
     removePackage(name);
   });
@@ -55,8 +59,24 @@ program
   .command('bootstrap')
   .description('项目引导')
   .action(async () => {
-    const { default: bootstrap } = await import('./scripts/bootstrap.js');
+    const {
+      default: bootstrap
+    } = await import('./scripts/bootstrap.js');
     bootstrap();
+  });
+
+program
+  .command('workspaces-foreach')
+  .argument('<command>', '完整命令')
+  .description('在所有工作目录下执行命令')
+  .option('--skip [names...]', '跳过，不执行的workspace；`name=pkg.name`')
+  .option('--if-present', '如果脚本不存在，则不执行；命令是执行`pkg.scripts`脚本才能用该标识')
+  .action(async (command, opts) => {
+    const {
+      default: workspacesForeach
+    } = await import('./scripts/workspaces-foreach.js');
+    workspacesForeach(command, opts);
+    // console.log(command, opts);
   });
 
 // 测试

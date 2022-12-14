@@ -42,17 +42,10 @@ jobs:
           yarn run bootstrap
       - name: 执行 test 脚本
         run: yarn run test
-      # - name: 测试覆盖率文件
-      #   id: coverage_files
-      #   run: |
-      #     files=$(ls packages/*/coverage/clover.xml -m)
-      #     echo "value=${files}" >> $GITHUB_OUTPUT
-      - name: 上传Codecov
-        uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          # files: ${{ steps.coverage_files.outputs.value }}
-          files: "packages/*/coverage/clover.xml"
+          files: "packages/*/coverage/coverage-final.json"
           flags: unittests
           fail_ci_if_error: true
           verbose: true

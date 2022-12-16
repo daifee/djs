@@ -1,6 +1,5 @@
 {
   "name": "djs",
-  "private": true,
   "type": "module",
   "scripts": {
     "test": "node ./bin.js workspaces-foreach 'yarn run test' --if-present --skip djs",

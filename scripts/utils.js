@@ -3,7 +3,7 @@ import process from 'node:process';
 import path from 'node:path';
 import url from 'node:url';
 import { execSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import chalk from 'chalk';
 
 export const ROOT_PATH = process.cwd();
@@ -26,8 +26,13 @@ export function execChildProcessSync(command, options = {}) {
 
   console.log(chalk.blue('\n➤ execSync'));
   console.log(chalk.blue(`${opts.cwd}$ ${command}`));
+  const label = chalk.green(`${command} 耗时：`);
 
-  return execSync(command, opts);
+  console.time(label);
+  const result = execSync(command, opts);
+  console.timeEnd(label);
+
+  return result;
 }
 
 /**
@@ -112,7 +117,7 @@ export function workspaceExistsScript(workspace, scriptName) {
   return false;
 }
 
-function parseJsonFile(filePath) {
+export function parseJsonFile(filePath) {
   const json = readFileSync(filePath, { encoding: 'utf-8' });
   try {
     return JSON.parse(json);
@@ -165,4 +170,32 @@ export function resolvePackagePath(name) {
   } else {
     return path.resolve(ROOT_PATH, PACKAGES_DIR, name);
   }
+}
+
+export function getAllPackageNames() {
+  return workspacesList()
+    .filter((workspace) => {
+      return workspace.name !== 'djs';
+    })
+    .map((workspace) => {
+      return workspace.name;
+    });
+}
+
+export function exit(code, stdout) {
+  if (stdout) {
+    console.log(chalk.red(stdout));
+  }
+  process.exit(code);
+}
+
+export function readPackageFile(name) {
+  const pkgFile = path.resolve(resolvePackagePath(name), 'package.json');
+  return parseJsonFile(pkgFile);
+}
+
+export function writePackageFile(name, jsonObj) {
+  const pkgFile = path.resolve(resolvePackagePath(name), 'package.json');
+  const jsonStr = JSON.stringify(jsonObj, null, 2);
+  writeFileSync(pkgFile, jsonStr, { encoding: 'utf-8' });
 }

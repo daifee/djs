@@ -74,7 +74,7 @@ function publish({ version, packageName }) {
   version = updateVersion(packageName, version);
   // 新 commit
   execChildProcessSync('git add --all');
-  execChildProcessSync(`git commit -m "publish "${packageName} ${version}`);
+  execChildProcessSync(`git commit -m "publish "${packageName} ${version}"`);
   execChildProcessSync(`git tag ${packageName}@${version}`);
   execChildProcessSync('git push --all');
 

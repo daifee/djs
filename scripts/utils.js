@@ -24,7 +24,7 @@ export function execChildProcessSync(command, options = {}) {
     ...options
   };
 
-  console.log(chalk.blue('\n➤ execSync'));
+  // console.log(chalk.blue('\n➤ execSync'));
   console.log(chalk.blue(`${opts.cwd}$ ${command}`));
   const label = chalk.green(`${command} 耗时：`);
 

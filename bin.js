@@ -79,10 +79,4 @@ program
     // console.log(command, opts);
   });
 
-// 测试
-
-// 构建
-
-// 发布
-
 program.parseAsync();

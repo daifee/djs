@@ -75,8 +75,10 @@ function publish({ version, packageName }) {
   // 新 commit
   execChildProcessSync('git add --all');
   execChildProcessSync(`git commit -m "publish: ${packageName}@${version}"`);
-  execChildProcessSync(`git tag ${packageName}@${version}`);
   execChildProcessSync('git push --all');
+  // git tag
+  execChildProcessSync(`git tag ${packageName}@${version}`);
+  execChildProcessSync('git push --tags');
 
   // npm publish
   execChildProcessSync(`yarn workspace ${packageName} npm publish --access=public`);

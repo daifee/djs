@@ -9,7 +9,8 @@
     "create-package": "node ./bin.js create-package",
     "remove-package": "node ./bin.js remove-package",
     "bootstrap": "node ./bin.js bootstrap",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "publish": "node ./scripts/publish.js"
   },
   "lint-staged": {
     "*.(js|ts)": "yarn eslint"

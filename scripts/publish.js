@@ -62,6 +62,8 @@ export default function run() {
   inquirer
     .prompt(questions)
     .then((answers) => {
+      // 测试代码
+      execChildProcessSync(`yarn workspace ${answers.packageName} run test`);
       publish(answers);
     });
 }

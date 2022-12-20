@@ -70,8 +70,6 @@ export default function run() {
     });
 }
 
-run();
-
 // 发布版本
 function publish({ version, packageName }) {
   // 更新版本号

@@ -10,7 +10,7 @@
     "remove-package": "node ./bin.js remove-package",
     "bootstrap": "node ./bin.js bootstrap",
     "postinstall": "husky install",
-    "publish": "node ./scripts/publish.js"
+    "publish": "node ./bin.js publish"
   },
   "lint-staged": {
     "*.(js|ts)": "yarn eslint"

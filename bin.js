@@ -65,6 +65,9 @@ program
     bootstrap();
   });
 
+/**
+ * workspaces-foreach 功能
+ */
 program
   .command('workspaces-foreach')
   .argument('<command>', '完整命令')
@@ -76,7 +79,19 @@ program
       default: workspacesForeach
     } = await import('./scripts/workspaces-foreach.js');
     workspacesForeach(command, opts);
-    // console.log(command, opts);
+  });
+
+/**
+ * 发布
+ */
+program
+  .command('publish')
+  .description('发布包')
+  .action(async () => {
+    const {
+      default: publish
+    } = await import('./scripts/publish.js');
+    publish();
   });
 
 program.parseAsync();

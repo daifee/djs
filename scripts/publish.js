@@ -57,13 +57,15 @@ export default function run() {
   assertClean();
   // 判断登录状态
   assertLogined();
-  // 检测代码
+  // lint
   execChildProcessSync('yarn run lint');
   inquirer
     .prompt(questions)
     .then((answers) => {
-      // 测试代码
+      // test
       execChildProcessSync(`yarn workspace ${answers.packageName} run test`);
+      // build
+      execChildProcessSync(`yarn workspace ${answers.packageName} run build`);
       publish(answers);
     });
 }

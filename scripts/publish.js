@@ -62,6 +62,8 @@ export default function run() {
   inquirer
     .prompt(questions)
     .then((answers) => {
+      // install
+      execChildProcessSync(`yarn workspace ${answers.packageName} install`);
       // test
       execChildProcessSync(`yarn workspace ${answers.packageName} run test`);
       // build

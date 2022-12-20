@@ -63,7 +63,7 @@ export default function run() {
     .prompt(questions)
     .then((answers) => {
       // install
-      execChildProcessSync(`yarn workspace ${answers.packageName} install`);
+      execChildProcessSync(`yarn workspace ${answers.packageName} install --immutable`);
       // test
       execChildProcessSync(`yarn workspace ${answers.packageName} run test`);
       // build
@@ -85,7 +85,7 @@ function publish({ version, packageName }) {
   execChildProcessSync('git push --tags');
 
   // npm publish
-  execChildProcessSync(`yarn workspace ${packageName} npm publish --access=public`);
+  execChildProcessSync(`yarn workspace ${packageName} npm publish`);
 }
 
 // 修改版本号

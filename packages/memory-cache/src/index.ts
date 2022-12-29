@@ -1,4 +1,13 @@
+import { Cache } from './types';
 
-export default function demo(): boolean {
-  return true;
+export class FIFOCache<D> extends Cache<D> {
+
+}
+
+export class LFUCache<D> extends Cache<D> {
+
+}
+
+export class LRUCache<D> extends Cache<D> {
+
 }

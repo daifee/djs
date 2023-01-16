@@ -7,5 +7,6 @@ module.exports = {
         allowDeclareFields: true
       }
     ]
-  ]
+  ],
+  sourceMaps: true
 };

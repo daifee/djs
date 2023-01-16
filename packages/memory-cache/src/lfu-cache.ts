@@ -52,10 +52,11 @@ export class LFUCache<V> {
       const expiredNode = this.findExpiredNode();
       if (expiredNode != null) {
         this.list.remove(expiredNode);
+        this.hash.delete(expiredNode.key);
       }
     }
 
-    if (this.capacity < this.list.size) {
+    if (this.capacity > this.list.size) {
       node = new CacheNode(key, value);
       node.times += 1;
       this.list.addLast(node);

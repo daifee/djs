@@ -1,3 +1,4 @@
+import { LFUCache } from './lfu-cache';
 
 export class FIFOCache<DATA> {
   protected size: number;
@@ -72,4 +73,4 @@ export class LRUCache<DATA> {
   }
 }
 
-export const LFUCache = LRUCache;
+export { LFUCache };

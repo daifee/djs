@@ -16,22 +16,44 @@ export class LinkedList<V> {
   protected tail: GhostNode<V> = null;
   size: number = 0;
 
+  protected assertExistedNode(node: LinkedNode<V>): void {
+    if (node.prev != null || node.next != null || this.head === node) {
+      throw Error('the node already exists in the linked list');
+    }
+  }
+
   isEmpty(): boolean {
     return this.size === 0;
   }
 
-  add(node: LinkedNode<V>): void {
-    if (this.isEmpty()) {
-      return this.addFirst(node);
-    }
-
-    return this.addLast(node);
+  getFirst(): GhostNode<V> {
+    return this.head;
   }
 
-  addFirst(node: LinkedNode<V>): void {
+  getLast(): GhostNode<V> {
+    return this.tail;
+  }
+
+  add(node: LinkedNode<V>): void {
+    this.assertExistedNode(node);
+
     if (this.isEmpty()) {
       this.head = node;
       this.tail = node;
+    } else {
+      const tail = this.tail as LinkedNode<V>;
+      this.tail = node;
+      tail.next = node;
+      node.prev = tail;
+    }
+    this.size += 1;
+  }
+
+  addFirst(node: LinkedNode<V>): void {
+    this.assertExistedNode(node);
+
+    if (this.isEmpty()) {
+      return this.add(node);
     } else {
       const head = this.head as LinkedNode<V>;
       this.head = node;
@@ -43,16 +65,7 @@ export class LinkedList<V> {
   }
 
   addLast(node: LinkedNode<V>): void {
-    if (this.isEmpty()) {
-      this.head = node;
-      this.tail = node;
-    } else {
-      const tail = this.tail as LinkedNode<V>;
-      this.tail = node;
-      tail.next = node;
-      node.prev = tail;
-    }
-    this.size += 1;
+    return this.add(node);
   }
 
   remove(node: LinkedNode<V>): void {

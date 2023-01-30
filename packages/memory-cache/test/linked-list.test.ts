@@ -1,9 +1,8 @@
 
-import {
-  LinkedNode,
-  LinkedList
+import LinkedList, {
+  LinkedNode
 } from '../src/linked-list';
-import groupCases from '../../../test-utils/group-cases';
+import testCases from '../../../test-utils/test-cases';
 
 describe('LinkedNode', () => {
   test('case-1', () => {
@@ -16,28 +15,22 @@ describe('LinkedNode', () => {
   });
 });
 
-describe.only('LinkedList', () => {
+describe('LinkedList', () => {
   test('case-1', () => {
     const list = new LinkedList<number>();
 
-    expect(list).toBeInstanceOf(LinkedList);
-    expect([
-      list.isEmpty(),
-      list.size,
-      list.getFirst()?.value,
-      list.getLast()?.value
-    ]).toStrictEqual([
-      true,
-      0,
-      undefined,
-      undefined
+    testCases([
+      [list.isEmpty(), true],
+      [list.size, 0],
+      [list.getFirst()?.value, undefined],
+      [list.getLast()?.value, undefined]
     ]);
   });
 
   test('case-2', () => {
     const list = new LinkedList<number>();
 
-    const { received, expected } = groupCases([
+    testCases([
       [list.size, 0],
       [list.add(new LinkedNode(1)), undefined],
       [list.getFirst()?.value, 1],
@@ -52,21 +45,17 @@ describe.only('LinkedList', () => {
       [list.size, 4],
       [list.isEmpty(), false]
     ]);
-
-    expect(received).toStrictEqual(expected);
   });
 
   test('case-3', () => {
     const list = new LinkedList<string>();
 
-    const { received, expected } = groupCases([
+    testCases([
       [list.isEmpty(), true],
       [list.add(new LinkedNode('3')), undefined],
       [list.add(new LinkedNode('3')), undefined],
       [list.getFirst() !== list.getLast(), true]
     ]);
-
-    expect(received).toStrictEqual(expected);
   });
 
   test('case-4', () => {
@@ -74,7 +63,7 @@ describe.only('LinkedList', () => {
 
     const node = new LinkedNode('33');
 
-    const { received, expected } = groupCases([
+    testCases([
       [list.add(node), undefined],
       [list.remove(node), undefined],
       [list.isEmpty(), true],
@@ -85,8 +74,6 @@ describe.only('LinkedList', () => {
       [list.getFirst(), node],
       [list.getLast(), node]
     ]);
-
-    expect(received).toStrictEqual(expected);
   });
 
   test('case-5', () => {
@@ -115,7 +102,7 @@ describe.only('LinkedList', () => {
   test('case-7', () => {
     const list = new LinkedList<number>();
 
-    const { received, expected } = groupCases([
+    testCases([
       [list.isEmpty(), true],
       [list.size, 0],
       [list.addFirst(new LinkedNode(99)), undefined],
@@ -124,7 +111,5 @@ describe.only('LinkedList', () => {
       [list.getFirst()?.value, 99],
       [list.getLast()?.value, 99]
     ]);
-
-    expect(expected).toStrictEqual(received);
   });
 });

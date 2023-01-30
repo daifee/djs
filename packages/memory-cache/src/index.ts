@@ -1,4 +1,4 @@
-import { LFUCache } from './lfu-cache';
+import LFUCache from './lfu-cache';
 
 export class FIFOCache<DATA> {
   protected size: number;

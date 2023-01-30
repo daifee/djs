@@ -1,86 +1,109 @@
 
-import { LinkedList, LinkedNode } from './linked-list';
+import LinkedList, { LinkedNode } from './linked-list';
+import HashMap from './hash-map';
 
-class CacheNode<V> extends LinkedNode<V> {
+const INIT_TIMES = 1;
+class CacheNode<V> {
   key: string;
   value: V;
   times: number;
 
-  constructor(key: string, value: V) {
-    super(value);
-
-    this.times = 0;
+  constructor(key: string, value: V, times: number = INIT_TIMES) {
     this.key = key;
     this.value = value;
+    this.times = times;
   }
 }
 
-export class LFUCache<V> {
+export default class LFUCache<V> {
   protected capacity: number;
-  protected hash: Map<string, CacheNode<V>>;
-  protected list: LinkedList<V>;
+  protected mapCache: HashMap<string, LinkedNode<CacheNode<V>>>;
+  protected mapTimesList: HashMap<number, LinkedList<CacheNode<V>>>;
+
+  protected leastTimes: number;
 
   constructor(capacity: number) {
     this.capacity = capacity;
-    this.hash = new Map();
-    this.list = new LinkedList();
+
+    this.mapCache = new HashMap();
+    this.mapTimesList = new HashMap();
+
+    this.leastTimes = INIT_TIMES;
   }
 
   get(key: string): V | undefined {
-    const node = this.hash.get(key);
+    const node = this.mapCache.get(key);
     if (node == null) {
       return undefined;
     }
 
-    // update: order, times
-    this.updateOrder(node);
-    node.times += 1;
+    this.freshNode(node);
 
-    return node.value;
+    return node.value.value;
   }
 
   put(key: string, value: V): void {
-    let node = this.hash.get(key);
+    let node = this.mapCache.get(key);
     if (node != null) {
-      this.updateOrder(node);
-      node.times += 1;
+      // update: order, times, value
+      this.freshNode(node);
+      node.value.value = value;
       return undefined;
     }
 
-    if (this.capacity === this.list.size) {
-      // delete expiredNode
-      const expiredNode = this.findExpiredNode();
-      if (expiredNode != null) {
-        this.list.remove(expiredNode);
-        this.hash.delete(expiredNode.key);
-      }
+    if (this.capacity === this.mapCache.size) {
+      this.removeStaleNode();
     }
 
-    if (this.capacity > this.list.size) {
-      node = new CacheNode(key, value);
-      node.times += 1;
-      this.list.addLast(node);
-      this.hash.set(key, node);
+    if (this.capacity <= this.mapCache.size) {
+      return undefined;
+    }
+
+    // cache
+    node = new LinkedNode(new CacheNode(key, value));
+    this.addNode(node);
+  }
+
+  // 提升新鲜度（times, order）
+  protected freshNode(node: LinkedNode<CacheNode<V>>): void {
+    this.removeNode(node);
+
+    node.value.times += 1;
+
+    this.addNode(node);
+  }
+
+  protected addNode(node: LinkedNode<CacheNode<V>>): void {
+    const { times, key } = node.value;
+
+    this.mapCache.put(key, node);
+
+    let list = this.mapTimesList.get(times);
+    if (list == null) {
+      list = new LinkedList<CacheNode<V>>();
+      this.mapTimesList.put(times, list);
+    }
+    list.addLast(node);
+  }
+
+  protected removeNode(node: LinkedNode<CacheNode<V>>): void {
+    const { key, times } = node.value;
+    this.mapCache.remove(key);
+
+    const list = this.mapTimesList.get(times) as LinkedList<CacheNode<V>>;
+    list.remove(node);
+    if (list.isEmpty()) {
+      this.mapTimesList.remove(times);
     }
   }
 
-  protected findExpiredNode(): CacheNode<V> | null {
-    let node: CacheNode<V> | null = null;
+  protected removeStaleNode(): void {
+    // TODO: update leastTimes
+    const times = this.leastTimes;
+    const list = this.mapTimesList.get(times) as LinkedList<CacheNode<V>>;
 
-    (this.list).each((cursor: LinkedNode<V>) => {
-      const cur = cursor as CacheNode<V>;
-      if (node == null) {
-        node = cur;
-      } else if (node.times > cur.times) {
-        node = cur;
-      }
-    });
+    const node = list.getFirst() as LinkedNode<CacheNode<V>>;
 
-    return node;
-  }
-
-  protected updateOrder(node: CacheNode<V>): void {
-    this.list.remove(node);
-    this.list.addLast(node);
+    this.removeNode(node);
   }
 }

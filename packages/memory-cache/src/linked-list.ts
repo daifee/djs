@@ -11,7 +11,7 @@ export class LinkedNode<V> {
   }
 }
 
-export class LinkedList<V> {
+export default class LinkedList<V> {
   protected head: GhostNode<V> = null;
   protected tail: GhostNode<V> = null;
   size: number = 0;

@@ -111,4 +111,20 @@ describe.only('LinkedList', () => {
     list.remove(node);
     expect(node.prev).toStrictEqual(null);
   });
+
+  test('case-7', () => {
+    const list = new LinkedList<number>();
+
+    const { received, expected } = groupCases([
+      [list.isEmpty(), true],
+      [list.size, 0],
+      [list.addFirst(new LinkedNode(99)), undefined],
+      [list.isEmpty(), false],
+      [list.size, 1],
+      [list.getFirst()?.value, 99],
+      [list.getLast()?.value, 99]
+    ]);
+
+    expect(expected).toStrictEqual(received);
+  });
 });

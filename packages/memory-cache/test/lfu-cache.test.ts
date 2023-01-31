@@ -1,9 +1,9 @@
-import LRUCache from '../src/lfu-cache';
+import LFUCache from '../src/lfu-cache';
 import testCases from '../../../test-utils/test-cases';
 
-describe.only('LRUCache', () => {
+describe('LFUCache', () => {
   test('case-1', () => {
-    const cache = new LRUCache<number>(2);
+    const cache = new LFUCache<number>(2);
 
     testCases([
       [cache.put('2', 2), undefined],
@@ -16,7 +16,7 @@ describe.only('LRUCache', () => {
   });
 
   test('case-2', () => {
-    const cache = new LRUCache<number>(3);
+    const cache = new LFUCache<number>(3);
 
     testCases([
       [cache.put('2', 2), undefined],

@@ -68,6 +68,19 @@ export default class LinkedList<V> {
     return this.add(node);
   }
 
+  addBefore(node: LinkedNode<V>, targetNode: LinkedNode<V>): void {
+    const prev = targetNode.prev;
+    if (prev == null) {
+      return this.addFirst(node);
+    }
+
+    prev.next = node;
+    node.prev = prev;
+    targetNode.prev = node;
+    node.next = targetNode;
+    this.size += 1;
+  }
+
   remove(node: LinkedNode<V>): void {
     const prev = node.prev;
     const next = node.next;

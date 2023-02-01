@@ -1,16 +1,17 @@
 
 import LinkedList, { LinkedNode } from './linked-list';
+import {
+  AbstractCache,
+  CacheMeta as CacheMetaBase
+} from './cache';
 import HashMap from './hash-map';
 
 const INIT_FREQ = 1;
-class CacheNode<V> {
-  key: string;
-  value: V;
+class CacheMeta<V> extends CacheMetaBase<V> {
   freq: number;
 
   constructor(key: string, value: V, freq: number = INIT_FREQ) {
-    this.key = key;
-    this.value = value;
+    super(key, value);
     this.freq = freq;
   }
 }
@@ -63,28 +64,17 @@ class FreqList {
   }
 }
 
-export default class LFUCache<V> {
-  protected capacity: number;
-  protected cache: HashMap<string, LinkedNode<CacheNode<V>>>;
-  protected freqMapCacheList: HashMap<number, LinkedList<CacheNode<V>>>;
-
+export default class LFUCache<V> extends AbstractCache<V> {
+  protected cache: HashMap<string, LinkedNode<CacheMeta<V>>>;
+  protected freqMapCacheList: HashMap<number, LinkedList<CacheMeta<V>>>;
   protected freqList: FreqList;
 
   constructor(capacity: number) {
-    this.capacity = capacity;
+    super(capacity);
 
     this.cache = new HashMap();
     this.freqMapCacheList = new HashMap();
-
     this.freqList = new FreqList();
-  }
-
-  get size(): number {
-    return this.cache.size;
-  }
-
-  delete(key: string): void {
-
   }
 
   get(key: string): V | undefined {
@@ -99,11 +89,9 @@ export default class LFUCache<V> {
   }
 
   put(key: string, value: V): void {
-    if (this.capacity === 0) {
-      return undefined;
-    }
-
     let node = this.cache.get(key);
+
+    // old
     if (node != null) {
       // update: order, times, value
       this.freshNode(node);
@@ -111,17 +99,34 @@ export default class LFUCache<V> {
       return undefined;
     }
 
-    if (this.capacity === this.cache.size) {
-      this.removeStaleNode();
+    // new
+    if (this.size === this.capacity) {
+      this.deleteExpiredValue();
+    }
+    // cache
+    if (this.size < this.capacity) {
+      node = new LinkedNode(new CacheMeta(key, value));
+      this.addNode(node);
+    }
+  }
+
+  delete(key: string): boolean {
+    const node = this.cache.get(key);
+    if (node == null) {
+      return false;
     }
 
-    // cache
-    node = new LinkedNode(new CacheNode(key, value));
-    this.addNode(node);
+    return this.removeNode(node);
+  }
+
+  clear(): void {
+    this.cache = new HashMap();
+    this.freqList = new FreqList();
+    this.freqMapCacheList = new HashMap();
   }
 
   // 提升新鲜度（freq, order）
-  protected freshNode(node: LinkedNode<CacheNode<V>>): void {
+  protected freshNode(node: LinkedNode<CacheMeta<V>>): void {
     this.removeNode(node);
 
     const freq = node.value.freq;
@@ -133,14 +138,14 @@ export default class LFUCache<V> {
     this.addNode(node);
   }
 
-  protected addNode(node: LinkedNode<CacheNode<V>>): void {
+  protected addNode(node: LinkedNode<CacheMeta<V>>): void {
     const { freq, key } = node.value;
 
     this.cache.put(key, node);
 
     let list = this.freqMapCacheList.get(freq);
     if (list == null) {
-      list = new LinkedList<CacheNode<V>>();
+      list = new LinkedList<CacheMeta<V>>();
       this.freqMapCacheList.put(freq, list);
     }
     list.addLast(node);
@@ -148,27 +153,32 @@ export default class LFUCache<V> {
     this.freqList.add(node.value.freq);
   }
 
-  protected removeNode(node: LinkedNode<CacheNode<V>>): void {
+  protected removeNode(node: LinkedNode<CacheMeta<V>>): boolean {
     const { key, freq } = node.value;
-    this.cache.remove(key);
 
-    const list = this.freqMapCacheList.get(freq) as LinkedList<CacheNode<V>>;
+    const list = this.freqMapCacheList.get(freq) as LinkedList<CacheMeta<V>>;
     list.remove(node);
     if (list.isEmpty()) {
       this.freqMapCacheList.remove(freq);
     }
+
+    return this.cache.remove(key);
   }
 
-  protected removeStaleNode(): void {
+  protected deleteExpiredValue(): void {
     const freq = this.getLeastFreq();
-    const list = this.freqMapCacheList.get(freq) as LinkedList<CacheNode<V>>;
+    if (freq === undefined) {
+      return;
+    }
 
-    const node = list.getFirst() as LinkedNode<CacheNode<V>>;
+    const list = this.freqMapCacheList.get(freq) as LinkedList<CacheMeta<V>>;
+
+    const node = list.getFirst() as LinkedNode<CacheMeta<V>>;
 
     this.removeNode(node);
   }
 
-  protected getLeastFreq(): number {
-    return this.freqList.getMin() as number;
+  protected getLeastFreq(): number | undefined {
+    return this.freqList.getMin();
   }
 }

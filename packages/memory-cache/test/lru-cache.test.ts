@@ -282,4 +282,75 @@ describe('./lru-cache.test.ts', () => {
       [cache.get('4'), 4]
     ]);
   });
+
+  test('case-18', () => {
+    const cache = new LRUCache<number>(3);
+
+    testCases([
+      [cache.size, 0],
+      [cache.put('1', 1), undefined],
+      [cache.put('1', 11), undefined],
+      [cache.put('2', 2), undefined],
+      [cache.put('2', 22), undefined],
+
+      [cache.put('1', 12), undefined],
+
+      [cache.put('3', 3), undefined],
+      [cache.put('4', 4), undefined],
+
+      [cache.size, 3],
+      [cache.get('1'), 12],
+      [cache.get('2'), undefined],
+      [cache.get('3'), 3],
+      [cache.get('4'), 4]
+    ]);
+  });
+
+  test('case-19', () => {
+    const cache = new LRUCache<number>(3);
+
+    testCases([
+      [cache.size, 0],
+      [cache.put('1', 1), undefined],
+      [cache.put('1', 11), undefined],
+      [cache.put('2', 2), undefined],
+      [cache.put('2', 22), undefined],
+
+      [cache.delete('1'), true],
+      [cache.put('1', 12), undefined],
+
+      [cache.put('3', 3), undefined],
+      [cache.put('4', 4), undefined],
+
+      [cache.size, 3],
+      [cache.get('1'), 12],
+      [cache.get('2'), undefined],
+      [cache.get('3'), 3],
+      [cache.get('4'), 4]
+    ]);
+  });
+
+  test('case-20', () => {
+    const cache = new LRUCache<number>(2);
+
+    testCases([
+      [cache.size, 0],
+      [cache.put('1', 1), undefined],
+      [cache.put('1', 11), undefined],
+      [cache.put('2', 2), undefined],
+      [cache.put('2', 22), undefined],
+
+      [cache.put('1', 12), undefined],
+      [cache.delete('1'), true],
+
+      [cache.put('3', 3), undefined],
+      [cache.put('4', 4), undefined],
+
+      [cache.size, 2],
+      [cache.get('1'), undefined],
+      [cache.get('2'), undefined],
+      [cache.get('3'), 3],
+      [cache.get('4'), 4]
+    ]);
+  });
 });

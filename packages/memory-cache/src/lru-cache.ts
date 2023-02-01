@@ -26,10 +26,6 @@ export default class LRUCache<V> extends AbstractCache<V> {
   }
 
   put(key: string, value: V): void {
-    if (this.capacity === 0) {
-      return;
-    }
-
     let node = this.cache.get(key);
 
     // old
@@ -44,9 +40,11 @@ export default class LRUCache<V> extends AbstractCache<V> {
     if (this.capacity === this.size) {
       this.deleteExpiredValue();
     }
-    node = new LinkedNode(new CacheMeta(key, value));
-    this.cache.put(key, node);
-    this.list.addLast(node);
+    if (this.size < this.capacity) {
+      node = new LinkedNode(new CacheMeta(key, value));
+      this.cache.put(key, node);
+      this.list.addLast(node);
+    }
   }
 
   delete(key: string): boolean {
@@ -67,6 +65,10 @@ export default class LRUCache<V> extends AbstractCache<V> {
 
   protected deleteExpiredValue(): void {
     const node = this.list.getFirst() as LinkedNode<CacheMeta<V>>;
+    if (node == null) {
+      return;
+    }
+
     this.list.remove(node);
     this.cache.remove(node.value.key);
   }

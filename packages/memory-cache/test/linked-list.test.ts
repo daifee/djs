@@ -112,4 +112,27 @@ describe('LinkedList', () => {
       [list.getLast()?.value, 99]
     ]);
   });
+
+  test('case-8', () => {
+    const list = new LinkedList<number>();
+
+    const node1 = new LinkedNode(1);
+    const node2 = new LinkedNode(2);
+    const node3 = new LinkedNode(3);
+
+    testCases([
+      [list.size, 0],
+      [list.add(node1), undefined],
+      [list.getFirst(), node1],
+      [list.getLast(), node1],
+      [list.addBefore(node2, node1), undefined],
+      [list.size, 2],
+      [list.getFirst(), node2],
+      [list.getLast(), node1],
+      [list.addBefore(node3, node1), undefined],
+      [list.size, 3],
+      [list.getFirst(), node2],
+      [list.getLast(), node1]
+    ]);
+  });
 });

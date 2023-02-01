@@ -79,6 +79,14 @@ export default class LFUCache<V> {
     this.freqList = new FreqList();
   }
 
+  get size(): number {
+    return this.cache.size;
+  }
+
+  delete(key: string): void {
+
+  }
+
   get(key: string): V | undefined {
     const node = this.cache.get(key);
     if (node == null) {
@@ -107,16 +115,12 @@ export default class LFUCache<V> {
       this.removeStaleNode();
     }
 
-    if (this.capacity <= this.cache.size) {
-      return undefined;
-    }
-
     // cache
     node = new LinkedNode(new CacheNode(key, value));
     this.addNode(node);
   }
 
-  // 提升新鲜度（times, order）
+  // 提升新鲜度（freq, order）
   protected freshNode(node: LinkedNode<CacheNode<V>>): void {
     this.removeNode(node);
 

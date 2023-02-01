@@ -19,6 +19,9 @@ export default class LRUCache<V> extends AbstractCache<V> {
       return undefined;
     }
 
+    // fresh
+    this.freshNode(node);
+
     return node.value.value;
   }
 
@@ -32,7 +35,8 @@ export default class LRUCache<V> extends AbstractCache<V> {
     // old
     if (node != null) {
       node.value.value = value;
-      // update
+      // fresh
+      this.freshNode(node);
       return;
     }
 
@@ -65,5 +69,10 @@ export default class LRUCache<V> extends AbstractCache<V> {
     const node = this.list.getFirst() as LinkedNode<CacheMeta<V>>;
     this.list.remove(node);
     this.cache.remove(node.value.key);
+  }
+
+  protected freshNode(node: LinkedNode<CacheMeta<V>>): void {
+    this.list.remove(node);
+    this.list.addLast(node);
   }
 }

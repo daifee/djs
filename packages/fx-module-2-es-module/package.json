@@ -1,7 +1,7 @@
 {
-  "name": "@daifee/memory-cache",
-  "version": "1.1.0",
-  "homepage": "https://github.com/daifee/djs/tree/main/packages/memory-cache#readme",
+  "name": "@daifee/fx-module-2-es-module",
+  "version": "1.0.0",
+  "homepage": "https://github.com/daifee/djs/tree/main/packages/fx-module-2-es-module#readme",
   "bugs": {
     "url": "https://github.com/daifee/djs/issues",
     "email": "mr_zhangjiayong@163.com"
@@ -12,8 +12,8 @@
     "test": "jest ./test/**/*.test.ts",
     "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand ./test/**/*.test.ts"
   },
-  "main": "./dist/memory-cache.cjs",
-  "module": "./dist/memory-cache.mjs",
+  "main": "./dist/fx-module-2-es-module.cjs",
+  "module": "./dist/fx-module-2-es-module.mjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",

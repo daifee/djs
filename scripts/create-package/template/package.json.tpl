@@ -9,7 +9,8 @@
   "type": "module",
   "scripts": {
     "build": "rollup --config ./rollup.config.js",
-    "test": "jest ./test/**/*.test.ts"
+    "test": "jest ./test/**/*.test.ts",
+    "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand ./test/**/*.test.ts"
   },
   "main": "./dist/<%= name %>.cjs",
   "module": "./dist/<%= name %>.mjs",

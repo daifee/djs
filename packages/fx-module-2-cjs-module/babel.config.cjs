@@ -7,5 +7,6 @@ module.exports = {
         allowDeclareFields: true
       }
     ]
-  ]
+  ],
+  plugins: ['babel-plugin-transform-import-meta']
 };

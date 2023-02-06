@@ -1,0 +1,12 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+indent_style = none
+indent_size = none
+end_of_line = none
+charset = none
+trim_trailing_whitespace = false
+insert_final_newline = false

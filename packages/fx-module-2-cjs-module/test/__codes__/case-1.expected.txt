@@ -1,0 +1,30 @@
+"use strict";
+
+// 开始PK（进入连麦状态
+function beginPk(channelId, onError) {
+  fxRequire.trigger('mergeLive', 'switchLiveMode', [21,
+  // 向 @伍威威 申请 http://wiki.kugou.net/pages/viewpage.action?pageId=50520173
+  {
+    channelId,
+    layoutType: 1,
+    micHandler: {
+      async getSdkInfo(sdk) {
+        sdk.mixMode = 2; // 写死客户端混流
+        return sdk;
+      }
+    }
+  }, res => {
+    if (res && res.status === 0) {
+      onError && onError(res);
+    }
+  }]);
+}
+
+// 结束PK（进入普通直播状态
+function endPk() {
+  fxRequire.trigger('mergeLive', 'switchNormalLive');
+}
+module.exports = {
+  beginPk,
+  endPk
+}

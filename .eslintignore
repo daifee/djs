@@ -3,3 +3,6 @@ packages/*/dist
 packages/*/coverage
 
 node_modules
+
+
+packages/fx-module-2-cjs-module/test/__codes__

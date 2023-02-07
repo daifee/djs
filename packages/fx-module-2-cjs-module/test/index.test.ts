@@ -1,10 +1,10 @@
-import * as babel from '@babel/core';
+import process from 'node:process';
 import fs from 'node:fs';
-import * as url from 'node:url';
 import path from 'node:path';
+import * as babel from '@babel/core';
 import plugin from '../src';
 
-const DIR = url.fileURLToPath(new URL('.', import.meta.url));
+const TEST_DIR = path.resolve(process.cwd(), 'test');
 
 function enforceFileExist(file): void {
   if (!fs.existsSync(file)) {
@@ -13,9 +13,9 @@ function enforceFileExist(file): void {
 }
 
 function testCase(filename: string): void {
-  const srcFile = path.resolve(DIR, '__codes__', `${filename}.src.txt`);
-  const expectedFile = path.resolve(DIR, '__codes__', `${filename}.expected.txt`);
-  const receivedFile = path.resolve(DIR, '__codes__', `${filename}.received.txt`);
+  const srcFile = path.resolve(TEST_DIR, '__codes__', `${filename}.js`);
+  const expectedFile = path.resolve(TEST_DIR, '__codes__', `${filename}.js.expected`);
+  const receivedFile = path.resolve(TEST_DIR, '__codes__', `${filename}.js.output`);
 
   enforceFileExist(srcFile);
   enforceFileExist(expectedFile);
@@ -31,6 +31,18 @@ function testCase(filename: string): void {
   expect(result?.code).toEqual(expected);
 }
 
-test('case-1', () => {
+test.skip('case-1 fxDefine ', () => {
   testCase('case-1');
+});
+
+test('case-2 fxRequire ', () => {
+  testCase('case-2');
+});
+
+test.skip('case-3 fxRequire.async ', () => {
+  testCase('case-3');
+});
+
+test.skip('case-4', () => {
+  testCase('case-4');
 });

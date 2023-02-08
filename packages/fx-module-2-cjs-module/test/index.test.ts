@@ -65,4 +65,22 @@ describe('case-2-*', () => {
   test('case-2-3', () => {
     testCase('case-2-3');
   });
+
+  test('case-2-4', () => {
+    testCase('case-2-4');
+  });
+});
+
+describe('case-3-*', () => {
+  test('case-3-1', () => {
+    testCase('case-3-1');
+  });
+
+  test('case-3-2', () => {
+    testCase('case-3-2');
+  });
+
+  test('case-3-3', () => {
+    testCase('case-3-3');
+  });
 });

@@ -11,10 +11,12 @@ export default function transformFxRequireAsyncCallExpression(path: NodePath<t.C
   const args = path.node.arguments;
   let newPath = null;
   // `fxRequire.async('module-id')`
+  // `import('module-id')`
   if (args.length === 1) {
     newPath = t.callExpression(t.identifier('import'), args);
   } else if (args.length === 2) {
     // `fxRequire.async('module-id', successCB)`
+    // `import('module-id').then(() => {})`
     newPath = t.callExpression(
       t.memberExpression(
         t.callExpression(
@@ -27,6 +29,7 @@ export default function transformFxRequireAsyncCallExpression(path: NodePath<t.C
     );
   } else {
     // `fxRequire.async('module-id', successCB, errorCB)`
+    // `import('module-id').then(() => {}).catch(() => {})`
     newPath = t.callExpression(
       t.memberExpression(
         t.callExpression(

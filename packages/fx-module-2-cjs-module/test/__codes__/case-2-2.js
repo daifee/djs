@@ -1,6 +1,6 @@
-require('case-1');
+fxRequire('case-1');
 
-const case2 = require('case-2');
+const case2 = fxRequire('case-2');
 
 
 case2.fly();

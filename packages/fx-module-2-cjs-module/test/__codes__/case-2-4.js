@@ -7,4 +7,5 @@ fxDefine('case-7', () => {
 
   case2.fly();
 
+  return { case1, case2 };
 });

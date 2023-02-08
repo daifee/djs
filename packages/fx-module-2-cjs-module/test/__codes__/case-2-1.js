@@ -1,4 +1,4 @@
 
-require('case-1');
+fxRequire('case-1');
 
-require('case-2').fly();
+fxRequire('case-2').fly();

@@ -1,0 +1,12 @@
+"use strict";
+
+function fly() {
+  //
+}
+const ID = 'daif';
+const hello = {
+  fly,
+  age: 18,
+  id: ID
+};
+module.exports = hello

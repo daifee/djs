@@ -1,0 +1,7 @@
+"use strict";
+
+function fly() {
+  //
+}
+const ID = 'daif';
+console.log(fly, ID);

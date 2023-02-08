@@ -1,0 +1,6 @@
+"use strict";
+
+module.exports = {
+  age: 18,
+  name: 'lili'
+};

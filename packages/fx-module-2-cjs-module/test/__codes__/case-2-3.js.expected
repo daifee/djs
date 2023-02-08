@@ -1,0 +1,5 @@
+"use strict";
+
+const case1 = require('case-1');
+const case2 = require('case-2');
+case2.fly();

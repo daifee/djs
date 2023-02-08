@@ -31,18 +31,38 @@ function testCase(filename: string): void {
   expect(result?.code).toEqual(expected);
 }
 
-test.skip('case-1 fxDefine ', () => {
-  testCase('case-1');
+describe('case-1-*', () => {
+  test('case-1-1', () => {
+    testCase('case-1-1');
+  });
+
+  test('case-1-5', () => {
+    testCase('case-1-5');
+  });
+
+  test('case-1-2 ', () => {
+    testCase('case-1-2');
+  });
+
+  test('case-1-3', () => {
+    testCase('case-1-3');
+  });
+
+  test('case-1-4', () => {
+    testCase('case-1-4');
+  });
 });
 
-test('case-2 fxRequire ', () => {
-  testCase('case-2');
-});
+describe('case-2-*', () => {
+  test('case-2-1', () => {
+    testCase('case-2-1');
+  });
 
-test.skip('case-3 fxRequire.async ', () => {
-  testCase('case-3');
-});
+  test('case-2-2', () => {
+    testCase('case-2-2');
+  });
 
-test.skip('case-4', () => {
-  testCase('case-4');
+  test('case-2-3', () => {
+    testCase('case-2-3');
+  });
 });

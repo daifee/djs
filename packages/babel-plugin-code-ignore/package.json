@@ -35,5 +35,8 @@
   "packageManager": "yarn@3.2.4",
   "engines": {
     "node": ">=16.17.1"
+  },
+  "peerDependencies": {
+    "@babel/types": "*"
   }
 }

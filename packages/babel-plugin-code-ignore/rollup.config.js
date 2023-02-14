@@ -26,5 +26,6 @@ export default {
   plugins: [
     typescript(),
     del({ targets: ['dist/*'] })
-  ]
+  ],
+  external: ['@babel/types']
 };

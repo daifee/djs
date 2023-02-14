@@ -1,0 +1,18 @@
+"use strict";
+
+var _kugou = _interopRequireDefault(require("./kugou"));
+require("./kugou.css");
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+// @code-ignore-next-statement kuwo
+
+// empty
+
+/**
+ * css
+ * kugou
+ */
+// @code-ignore-next-statement kuwo
+
+(0, _kugou.default)(); // @code-ignore-statement kuwo
+
+// @code-ignore-statement kugou

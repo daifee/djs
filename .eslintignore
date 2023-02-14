@@ -6,3 +6,4 @@ node_modules
 
 
 packages/fx-module-2-cjs-module/test/__codes__
+packages/babel-plugin-code-ignore/test/__codes__

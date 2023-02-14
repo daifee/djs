@@ -1,0 +1,11 @@
+"use strict";
+
+/**/
+
+//
+function fun() {
+  console.log('error');
+  console.log('success'); // @code-ignore-statement kugou
+}
+
+error();

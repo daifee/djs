@@ -1,0 +1,15 @@
+"use strict";
+
+var _react = _interopRequireDefault(require("react"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+// 问答框
+function Dialog() {
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "dialog"
+  });
+}
+function Main() {
+  return /*#__PURE__*/_react.default.createElement("div", {
+    id: "main"
+  }, /*#__PURE__*/_react.default.createElement("div", null, "1111111"), /*#__PURE__*/_react.default.createElement(Dialog, null, "222222"), /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", null, "333333333")));
+}

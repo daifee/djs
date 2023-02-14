@@ -1,9 +1,7 @@
 "use strict";
 
 function fun() {
-  //
-
-  // @code-ignore-next-statement kugou
+  console.log('error');
   console.log('success');
-  //
 }
+error();

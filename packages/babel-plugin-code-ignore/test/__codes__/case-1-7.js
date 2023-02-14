@@ -1,21 +1,14 @@
 
+/* @code-ignore-next-statement kuwo */
+
+import error from './error';
+
+
 // @code-ignore-next-statement kuwo
-function error() {
-  return {};
+function fun() {
+  console.log('error');
+  // @code-ignore-next-statement kugou
+  console.log('success');
 }
 
-
-function error2() {
-
-} // @code-ignore-statement kuwo
-
-
-function error3() {
-
-}
-// @code-ignore-statement kuwo
-
-
-error(); // @code-ignore-statement kuwo
-
-error2(); // @code-ignore-statement kuwo
+error();

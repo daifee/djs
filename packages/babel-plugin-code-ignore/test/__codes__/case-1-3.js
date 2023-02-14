@@ -1,5 +1,6 @@
 
+// @code-ignore-next-statement kugou kuwo
 
-import error from './error';// @code-ignore-statement kuwo
-import success from './success';
+import error from './error';
+
 

@@ -30,7 +30,7 @@ function testCase(filename: string, options): void {
 }
 
 describe('case-1-*', () => {
-  test.skip('case-1-1', () => {
+  test('case-1-1', () => {
     testCase('case-1-1', {
       plugins: [
         [plugin, { platform: 'kuwo' }]
@@ -57,7 +57,7 @@ describe('case-1-*', () => {
   test('case-1-4', () => {
     testCase('case-1-4', {
       plugins: [
-        [plugin, { platform: 'kugou' }]
+        [plugin, { platform: 'kuwo' }]
       ]
     });
   });
@@ -80,6 +80,102 @@ describe('case-1-*', () => {
 
   test('case-1-7', () => {
     testCase('case-1-7', {
+      plugins: [
+        [plugin, { platform: 'kuwo' }]
+      ]
+    });
+  });
+
+  test('case-1-8', () => {
+    testCase('case-1-8', {
+      plugins: [
+        [plugin, { platform: 'kuwo' }]
+      ]
+    });
+  });
+
+  test('case-1-9', () => {
+    testCase('case-1-9', {
+      plugins: [
+        [plugin, { platform: 'kuwo' }]
+      ],
+      comments: false
+    });
+  });
+
+  test('case-1-10', () => {
+    testCase('case-1-10', {
+      plugins: [
+        [plugin, { platform: 'kuwo' }]
+      ]
+    });
+  });
+});
+
+describe('case-2-*', () => {
+  test('case-2-1', () => {
+    testCase('case-2-1', {
+      plugins: [
+        [plugin, { platform: 'kuwo' }]
+      ]
+    });
+  });
+
+  test('case-2-2', () => {
+    testCase('case-2-2', {
+      plugins: [
+        [plugin, { platform: 'kuwo' }]
+      ]
+    });
+  });
+
+  test('case-2-3', () => {
+    testCase('case-2-3', {
+      plugins: [
+        [plugin, { platform: 'kuwo' }]
+      ]
+    });
+  });
+
+  test('case-2-4', () => {
+    testCase('case-2-4', {
+      plugins: [
+        [plugin, { platform: 'kuwo' }]
+      ]
+    });
+  });
+
+  test('case-2-5', () => {
+    testCase('case-2-5', {
+      plugins: [
+        [plugin, { platform: 'kuwo' }]
+      ]
+    });
+  });
+
+  test('case-2-6', () => {
+    testCase('case-2-6', {
+      plugins: [
+        [plugin, { platform: 'kuwo' }]
+      ]
+    });
+  });
+});
+
+describe('case-3-*', () => {
+  test('case-3-1', () => {
+    testCase('case-3-1', {
+      plugins: [
+        [plugin, { platform: 'kuwo' }]
+      ]
+    });
+  });
+});
+
+describe('case-4-*', () => {
+  test('case-4-1', () => {
+    testCase('case-4-1', {
+      presets: ['@babel/preset-react'],
       plugins: [
         [plugin, { platform: 'kuwo' }]
       ]

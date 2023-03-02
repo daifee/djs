@@ -17,7 +17,7 @@ export interface Card {
 
 export type Cards = Card[];
 
-function createCard(suit: TSuit, value: TValue): Card {
+export function createCard(suit: TSuit, value: TValue): Card {
   return {
     suit,
     value
@@ -25,7 +25,7 @@ function createCard(suit: TSuit, value: TValue): Card {
 }
 
 export function createCards(shuffled: boolean = false): Cards {
-  const cards: Card[] = [];
+  const cards: Cards = [];
 
   Values.forEach((value) => {
     Suits.forEach((suit) => {

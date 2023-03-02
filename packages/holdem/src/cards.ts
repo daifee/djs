@@ -1,37 +1,21 @@
 
-export const SUITS = {
-  CLUB: 'club',
-  DIAMOND: 'diamond',
-  HEART: 'heart',
-  SPADE: 'spade'
-} as const;
+export const Suits = ['club', 'diamond', 'heart', 'spade'] as const;
 
-export type TSuits = typeof SUITS[keyof typeof SUITS];
+export type TSuit = typeof Suits[number];
 
-export const VALUES = {
-  ACE: 'A',
-  KING: 'K',
-  QUEEN: 'Q',
-  JACK: 'J',
-  TEN: '10',
-  NINE: '9',
-  EIGHT: '8',
-  SEVEN: '7',
-  SIX: '6',
-  FIVE: '5',
-  FOUR: '4',
-  THREE: '3',
-  TWO: '2'
-} as const;
+export const Values = [
+  'A', 'K', 'Q', 'J',
+  '10', '9', '8', '7', '6', '5', '4', '3', '2'
+] as const;
 
-export type TValues = typeof VALUES[keyof typeof VALUES];
+export type TValue = typeof Values[number];
 
 export interface Card {
-  suit: TSuits
-  value: TValues
+  suit: TSuit
+  value: TValue
 }
 
-function createCard(suit: TSuits, value: TValues): Card {
+function createCard(suit: TSuit, value: TValue): Card {
   return {
     suit,
     value
@@ -41,14 +25,8 @@ function createCard(suit: TSuits, value: TValues): Card {
 export function createCards(): Card[] {
   const cards: Card[] = [];
 
-  Object.keys(VALUES).forEach((valueKey) => {
-    const valueKey1 = valueKey as keyof typeof VALUES;
-    const value = VALUES[valueKey1] as TValues;
-
-    Object.keys(SUITS).forEach((suitKey) => {
-      const suitKey1 = suitKey as keyof typeof SUITS;
-      const suit = SUITS[suitKey1];
-
+  Values.forEach((value) => {
+    Suits.forEach((suit) => {
       cards.push(createCard(suit, value));
     });
   });

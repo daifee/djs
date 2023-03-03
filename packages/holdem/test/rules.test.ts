@@ -6,6 +6,8 @@ import {
   createGroupedCards,
   createSortedCards,
   getNumber,
+  isFourOfAKind,
+  isThreeOfAKind,
   Patterns
 } from '../src/rules';
 
@@ -197,6 +199,74 @@ describe('createGroupedCards', () => {
     expect(groupedCards[1].length).toEqual(1);
     expect(groupedCards[2].length).toEqual(1);
     expect(groupedCards[3].length).toEqual(1);
+  });
+});
+
+describe('isFourOfAKind', () => {
+  test('true', () => {
+    const groupedCards = [
+      [
+        createCard('club', '10')
+      ],
+      [
+        createCard('club', 'J'),
+        createCard('diamond', 'J'),
+        createCard('heart', 'J'),
+        createCard('spade', 'J')
+      ]
+    ];
+    expect(isFourOfAKind(groupedCards)).toEqual(true);
+  });
+
+  test('true', () => {
+    const groupedCards = [
+      [
+        createCard('club', 'Q')
+      ],
+      [
+        createCard('club', '9')
+      ],
+      [
+        createCard('diamond', 'J'),
+        createCard('heart', 'J'),
+        createCard('spade', 'J')
+      ]
+    ];
+    expect(isFourOfAKind(groupedCards)).toEqual(false);
+  });
+});
+
+describe('isThreeOfAKind', () => {
+  test('true', () => {
+    const groupedCards = [
+      [
+        createCard('club', '10')
+      ],
+      [
+        createCard('club', 'A')
+      ],
+      [
+        createCard('diamond', 'J'),
+        createCard('heart', 'J'),
+        createCard('spade', 'J')
+      ]
+    ];
+    expect(isThreeOfAKind(groupedCards)).toEqual(true);
+  });
+
+  test('true', () => {
+    const groupedCards = [
+      [
+        createCard('club', '10'),
+        createCard('club', 'Q')
+      ],
+      [
+        createCard('diamond', 'J'),
+        createCard('heart', 'J'),
+        createCard('spade', 'J')
+      ]
+    ];
+    expect(isThreeOfAKind(groupedCards)).toEqual(false);
   });
 });
 

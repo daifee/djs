@@ -84,7 +84,7 @@ export function createSortedCards(cards: Cards): Cards {
   return result;
 }
 
-function checkPattern({ source, sorted, grouped }: CardsModel): TPattern {
+export function checkPattern({ source, sorted, grouped }: CardsModel): TPattern {
   // 对子
   if (grouped.length === 4) {
     // 9. 两对

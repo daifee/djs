@@ -101,6 +101,16 @@ function checkPattern({ source, sorted, grouped }: CardsModel): TPattern {
     return Patterns.Two_pair;
   }
 
+  // 葫芦 | 金刚
+  if (grouped.length === 2) {
+    // 3. 金刚
+    if (isFourOfAKind(grouped)) {
+      return Patterns.Four_of_a_kind;
+    }
+    // 4. 葫芦
+    return Patterns.Full_house;
+  }
+
   // 同花 | 同花顺 | 皇家同花顺
   if (isFlush(source)) {
     if (isStraight(sorted)) {
@@ -118,16 +128,6 @@ function checkPattern({ source, sorted, grouped }: CardsModel): TPattern {
   // 6. 顺子
   if (isStraight(sorted)) {
     return Patterns.Straight;
-  }
-
-  // 葫芦 | 金刚
-  if (grouped.length === 2) {
-    // 3. 金刚
-    if (isFourOfAKind(grouped)) {
-      return Patterns.Four_of_a_kind;
-    }
-    // 4. 葫芦
-    return Patterns.Full_house;
   }
 
   return Patterns.High_Card;

@@ -17,6 +17,9 @@
 
 import { Card } from './cards';
 
+// -1(l < r); 0(l == r); 1(l > r)
+type CompareResult = -1 | 0 | 1;
+
 export interface Cards extends Array<Card> {
   length: 5
   [key: number]: Card
@@ -196,4 +199,138 @@ export function getNumber(card: Card): number {
   };
 
   return map[card.value];
+}
+
+export function compare(l: Cards, r: Cards): CompareResult {
+  const lModel = new CardsModel(l);
+  const rModel = new CardsModel(r);
+
+  return compareCardsModel(lModel, rModel);
+}
+
+function compareCardsModel(lModel: CardsModel, rModel: CardsModel): CompareResult {
+  // 不同类型
+  if (lModel.pattern !== rModel.pattern) {
+    return compareCardsModelForDiffentPattern(lModel, rModel);
+  }
+
+  // 同类型
+  return compareCardsModelForSamePattern(lModel, rModel);
+}
+
+function compareCardsModelForDiffentPattern(lModel: CardsModel, rModel: CardsModel): CompareResult {
+  const mapWeight = {
+    [`${Patterns.Royal_Straight_Flush}`]: 10,
+    [`${Patterns.Straight_Flush}`]: 9,
+    [`${Patterns.Four_of_a_kind}`]: 8,
+    [`${Patterns.Full_house}`]: 7,
+    [`${Patterns.Flush}`]: 6,
+    [`${Patterns.Straight}`]: 5,
+    [`${Patterns.Three_of_a_kind}`]: 4,
+    [`${Patterns.Two_pair}`]: 3,
+    [`${Patterns.Pair}`]: 2,
+    [`${Patterns.High_Card}`]: 1
+  };
+
+  if (mapWeight[lModel.pattern] > mapWeight[rModel.pattern]) {
+    return 1;
+  } else {
+    return -1;
+  }
+}
+
+function compareCardsModelForSamePattern(lModel: CardsModel, rModel: CardsModel): CompareResult {
+  function compareHighCard(l: CardsModel, r: CardsModel): CompareResult {
+    let index = 0;
+    while (l.sorted[index] != null) {
+      const result = compareCard(l.sorted[index], r.sorted[index]);
+
+      if (result !== 0) {
+        return result;
+      }
+
+      index += 1;
+    }
+
+    return 0;
+  }
+
+  function compareStraight(l: CardsModel, r: CardsModel): CompareResult {
+    if (isOTTFF(l.sorted) && isOTTFF(r.sorted)) {
+      return 0;
+    }
+
+    if (isOTTFF(r.sorted)) {
+      return 1;
+    }
+
+    if (isOTTFF(l.sorted)) {
+      return -1;
+    }
+
+    return compareHighCard(l, r);
+  }
+
+  function compareGroupedCards(l: CardsModel, r: CardsModel): CompareResult {
+    function compareFn(a: Card[], b: Card[]): -1 | 0 | 1 {
+      if (a.length > b.length) {
+        return -1;
+      }
+      if (a.length < b.length) {
+        return 1;
+      }
+
+      return 0;
+    }
+
+    const lGroupedCards = [...l.grouped].sort(compareFn);
+    const rGroupedCards = [...r.grouped].sort(compareFn);
+    let index = 0;
+    while (lGroupedCards[index] != null) {
+      const result = compareCard(lGroupedCards[0][0], rGroupedCards[0][0]);
+      if (result !== 0) {
+        return result;
+      }
+
+      index += 1;
+    }
+
+    return 0;
+  }
+
+  switch (lModel.pattern) {
+    // 比高牌：同花、高牌
+    case Patterns.High_Card:
+    case Patterns.Flush:
+      return compareHighCard(lModel, rModel);
+    // 只需比高牌：皇家同花顺、同花顺、顺子
+    case Patterns.Royal_Straight_Flush:
+    case Patterns.Straight_Flush:
+    case Patterns.Straight:
+      return compareStraight(lModel, rModel);
+    // 先比组合高牌：金刚、葫芦、三条、两对、对子
+    default:
+      return compareGroupedCards(lModel, rModel);
+  }
+}
+
+export function compareCard(lCard: Card, rCard: Card): CompareResult {
+  const delta = getNumber(lCard) - getNumber(rCard);
+  if (delta > 0) {
+    return 1;
+  }
+
+  if (delta < 0) {
+    return -1;
+  }
+
+  return 0;
+}
+
+function isOTTFF(sortedCards: Cards): boolean {
+  if (getNumber(sortedCards[0]) === 13 && getNumber(sortedCards[1]) === 5) {
+    return true;
+  } else {
+    return false;
+  }
 }

@@ -50,6 +50,7 @@ export class CardsModel {
 
   constructor(cards: Cards) {
     this.source = cards;
+    // max -> min
     this.sorted = createSortedCards(this.source);
     this.grouped = createGroupedCards(this.sorted);
 
@@ -76,12 +77,19 @@ export function createGroupedCards(sortedcards: Cards): GroupedCards {
   return result;
 }
 
-// min -> max
+// max -> min
 export function createSortedCards(cards: Cards): Cards {
   const result = [...cards] as Cards;
 
   result.sort((l, r) => {
-    return getNumber(l) - getNumber(r);
+    const delta = getNumber(l) - getNumber(r);
+    if (delta < 0) {
+      return 1;
+    }
+    if (delta > 0) {
+      return -1;
+    }
+    return 0;
   });
 
   return result;
@@ -117,7 +125,8 @@ export function checkPattern({ source, sorted, grouped }: CardsModel): TPattern 
   // 同花 | 同花顺 | 皇家同花顺
   if (isFlush(source)) {
     if (isStraight(sorted)) {
-      if (sorted[4].value === 'A') {
+      // K
+      if (getNumber(sorted[1]) === 13) {
         // 1. 皇家同花顺
         return Patterns.Royal_Straight_Flush;
       }
@@ -164,16 +173,18 @@ export function isFlush(source: Cards): boolean {
 }
 
 export function isStraight(sorted: Cards): boolean {
-  let len: 5 | 4 = sorted.length;
-  if (sorted[0].value === '2' && sorted[4].value === 'A') {
-    // 1, 2, 3, 4, 5
-    len = 4;
+  let begin = 0;
+  // A, 5
+  if (getNumber(sorted[0]) === 14 && getNumber(sorted[1]) === 5) {
+    // 1, 5, 4, 3, 2
+    begin = 1;
   }
 
-  for (let i = 1; i < len; i++) {
+  const end = sorted.length - 1;
+  for (let i = begin; i < end; i++) {
     const curr = sorted[i];
-    const prev = sorted[i - 1];
-    if (getNumber(curr) - getNumber(prev) !== 1) {
+    const next = sorted[i + 1];
+    if (getNumber(curr) - getNumber(next) !== 1) {
       return false;
     }
   }
@@ -328,7 +339,7 @@ export function compareCard(lCard: Card, rCard: Card): CompareResult {
 }
 
 function isOTTFF(sortedCards: Cards): boolean {
-  if (getNumber(sortedCards[0]) === 13 && getNumber(sortedCards[1]) === 5) {
+  if (getNumber(sortedCards[0]) === 14 && getNumber(sortedCards[1]) === 5) {
     return true;
   } else {
     return false;

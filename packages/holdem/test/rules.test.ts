@@ -3,6 +3,7 @@ import { createCard } from '../src/cards';
 import {
   Cards,
   CardsModel,
+  compare,
   createGroupedCards,
   createSortedCards,
   getNumber,
@@ -10,6 +11,7 @@ import {
   isThreeOfAKind,
   Patterns
 } from '../src/rules';
+import { max as MockMax } from './mock.data';
 
 describe('getNumber', () => {
   test('case-1', () => {
@@ -65,7 +67,7 @@ describe('createSortedCards', () => {
     expect(sourceCards[0].value).toEqual('6');
   });
 
-  test('从小到大', () => {
+  test('从大到小', () => {
     const sourceCards = [
       createCard('club', '6'),
       createCard('club', '2'),
@@ -77,11 +79,11 @@ describe('createSortedCards', () => {
     const sortedCards = createSortedCards(sourceCards);
 
     expect(sortedCards).toEqual([
-      createCard('club', '2'),
-      createCard('club', '4'),
-      createCard('club', '5'),
+      createCard('club', '9'),
       createCard('club', '6'),
-      createCard('club', '9')
+      createCard('club', '5'),
+      createCard('club', '4'),
+      createCard('club', '2')
     ]);
   });
 
@@ -97,11 +99,11 @@ describe('createSortedCards', () => {
     const sortedCards = createSortedCards(sourceCards);
 
     expect(sortedCards).toEqual([
-      createCard('club', '10'),
-      createCard('club', 'J'),
-      createCard('club', 'Q'),
+      createCard('club', 'A'),
       createCard('club', 'K'),
-      createCard('club', 'A')
+      createCard('club', 'Q'),
+      createCard('club', 'J'),
+      createCard('club', '10')
     ]);
   });
 });
@@ -412,5 +414,119 @@ describe('CardModel', () => {
 
     const model = new CardsModel(cards);
     expect(model.pattern).toEqual(Patterns.High_Card);
+  });
+});
+
+describe('compare', () => {
+  test('case-1', () => {
+    const result = compare(MockMax.Royal_Straight_Flush, [
+      createCard('spade', '10'),
+      createCard('spade', 'A'),
+      createCard('spade', 'J'),
+      createCard('spade', 'K'),
+      createCard('spade', 'Q')
+    ] as Cards);
+
+    expect(result).toEqual(0);
+  });
+
+  test('case-2', () => {
+    expect(compare(
+      MockMax.Royal_Straight_Flush,
+      MockMax.Straight_Flush
+    )).toEqual(1);
+
+    expect(compare(
+      MockMax.Royal_Straight_Flush,
+      MockMax.Four_of_a_kind
+    )).toEqual(1);
+
+    expect(compare(
+      MockMax.Royal_Straight_Flush,
+      MockMax.Full_house
+    )).toEqual(1);
+
+    expect(compare(
+      MockMax.Royal_Straight_Flush,
+      MockMax.Flush
+    )).toEqual(1);
+
+    expect(compare(
+      MockMax.Royal_Straight_Flush,
+      MockMax.Straight
+    )).toEqual(1);
+
+    expect(compare(
+      MockMax.Royal_Straight_Flush,
+      MockMax.Three_of_a_kind
+    )).toEqual(1);
+
+    expect(compare(
+      MockMax.Royal_Straight_Flush,
+      MockMax.Two_pair
+    )).toEqual(1);
+
+    expect(compare(
+      MockMax.Royal_Straight_Flush,
+      MockMax.Pair
+    )).toEqual(1);
+
+    expect(compare(
+      MockMax.Royal_Straight_Flush,
+      MockMax.High_Card
+    )).toEqual(1);
+  });
+
+  test('case-3', () => {
+    expect(compare(
+      [
+        createCard('spade', '2'),
+        createCard('spade', 'A'),
+        createCard('spade', '3'),
+        createCard('spade', '4'),
+        createCard('spade', '5')
+      ] as Cards,
+      [
+        createCard('spade', '2'),
+        createCard('spade', '3'),
+        createCard('spade', '4'),
+        createCard('spade', '5'),
+        createCard('spade', '6')
+      ] as Cards
+    )).toEqual(-1);
+
+    expect(compare(
+      [
+        createCard('spade', 'K'),
+        createCard('spade', 'A'),
+        createCard('spade', 'J'),
+        createCard('spade', '10'),
+        createCard('spade', 'Q')
+      ] as Cards,
+      [
+        createCard('spade', '2'),
+        createCard('spade', '3'),
+        createCard('spade', '4'),
+        createCard('spade', '5'),
+        createCard('spade', '6')
+      ] as Cards
+    )).toEqual(1);
+
+    expect(compare(
+      [
+        createCard('spade', '2'),
+        createCard('spade', '3'),
+        createCard('spade', '4'),
+        createCard('spade', '5'),
+        createCard('spade', '6')
+      ] as Cards,
+      [
+        createCard('spade', '2'),
+        createCard('spade', '3'),
+        createCard('spade', '4'),
+        createCard('spade', '5'),
+        createCard('spade', '6')
+      ] as Cards
+    )).toEqual(0);
   });
 });

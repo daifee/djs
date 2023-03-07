@@ -529,4 +529,353 @@ describe('compare', () => {
       ] as Cards
     )).toEqual(0);
   });
+
+  test('case-4', () => {
+    expect(compare(
+      MockMax.Straight_Flush,
+      MockMax.Four_of_a_kind
+    )).toEqual(1);
+
+    expect(compare(
+      MockMax.Four_of_a_kind,
+      MockMax.Full_house
+    )).toEqual(1);
+
+    expect(compare(
+      MockMax.Full_house,
+      MockMax.Flush
+    )).toEqual(1);
+
+    expect(compare(
+      MockMax.Flush,
+      MockMax.Straight
+    )).toEqual(1);
+
+    expect(compare(
+      MockMax.Straight,
+      MockMax.Three_of_a_kind
+    )).toEqual(1);
+
+    expect(compare(
+      MockMax.Three_of_a_kind,
+      MockMax.Two_pair
+    )).toEqual(1);
+
+    expect(compare(
+      MockMax.Two_pair,
+      MockMax.Pair
+    )).toEqual(1);
+
+    expect(compare(
+      MockMax.Pair,
+      MockMax.High_Card
+    )).toEqual(1);
+  });
+
+  test('case-5', () => {
+    expect(compare(
+      [
+        createCard('spade', '2'),
+        createCard('spade', '3'),
+        createCard('spade', '4'),
+        createCard('spade', '5'),
+        createCard('club', 'A')
+      ] as Cards,
+      [
+        createCard('spade', '2'),
+        createCard('club', '3'),
+        createCard('spade', '4'),
+        createCard('spade', '5'),
+        createCard('spade', '6')
+      ] as Cards
+    )).toEqual(-1);
+  });
+
+  test('case-6', () => {
+    expect(compare(
+      [
+        createCard('spade', '2'),
+        createCard('spade', '3'),
+        createCard('spade', '4'),
+        createCard('spade', 'A'),
+        createCard('club', 'A')
+      ] as Cards,
+      [
+        createCard('spade', 'A'),
+        createCard('club', 'A'),
+        createCard('spade', '4'),
+        createCard('spade', '5'),
+        createCard('spade', '6')
+      ] as Cards
+    )).toEqual(-1);
+  });
+
+  test('case-7', () => {
+    expect(compare(
+      [
+        createCard('spade', '2'),
+        createCard('spade', '3'),
+        createCard('spade', '4'),
+        createCard('spade', 'A'),
+        createCard('club', 'A')
+      ] as Cards,
+      [
+        createCard('spade', 'K'),
+        createCard('club', 'K'),
+        createCard('spade', '4'),
+        createCard('spade', '5'),
+        createCard('spade', '6')
+      ] as Cards
+    )).toEqual(1);
+  });
+
+  test('case-8', () => {
+    expect(compare(
+      [
+        createCard('spade', '2'),
+        createCard('spade', '3'),
+        createCard('spade', '4'),
+        createCard('spade', 'A'),
+        createCard('club', 'A')
+      ] as Cards,
+      [
+        createCard('spade', 'K'),
+        createCard('club', 'K'),
+        createCard('spade', '4'),
+        createCard('club', '4'),
+        createCard('spade', '6')
+      ] as Cards
+    )).toEqual(-1);
+  });
+
+  test('case-9', () => {
+    expect(compare(
+      [
+        createCard('spade', '2'),
+        createCard('heart', '2'),
+        createCard('spade', '4'),
+        createCard('spade', 'A'),
+        createCard('club', 'A')
+      ] as Cards,
+      [
+        createCard('spade', 'K'),
+        createCard('club', 'K'),
+        createCard('spade', '4'),
+        createCard('club', '4'),
+        createCard('spade', '6')
+      ] as Cards
+    )).toEqual(1);
+  });
+
+  test('case-10', () => {
+    expect(compare(
+      [
+        createCard('spade', 'A'),
+        createCard('heart', '2'),
+        createCard('spade', '4'),
+        createCard('spade', '3'),
+        createCard('club', '5')
+      ] as Cards,
+      [
+        createCard('spade', 'A'),
+        createCard('heart', '2'),
+        createCard('spade', '4'),
+        createCard('spade', '3'),
+        createCard('club', '5')
+      ] as Cards
+    )).toEqual(0);
+
+    expect(compare(
+      [
+        createCard('spade', 'A'),
+        createCard('heart', '2'),
+        createCard('spade', '4'),
+        createCard('spade', '3'),
+        createCard('club', '5')
+      ] as Cards,
+      [
+        createCard('spade', '6'),
+        createCard('heart', '2'),
+        createCard('spade', '4'),
+        createCard('spade', '3'),
+        createCard('club', '5')
+      ] as Cards
+    )).toEqual(-1);
+
+    expect(compare(
+      [
+        createCard('spade', 'A'),
+        createCard('heart', '10'),
+        createCard('spade', 'K'),
+        createCard('spade', 'J'),
+        createCard('club', 'Q')
+      ] as Cards,
+      [
+        createCard('spade', 'A'),
+        createCard('heart', '2'),
+        createCard('spade', '4'),
+        createCard('spade', '3'),
+        createCard('club', '5')
+      ] as Cards
+    )).toEqual(1);
+  });
+
+  test('case-11', () => {
+    expect(compare(
+      [
+        createCard('spade', '2'),
+        createCard('spade', '3'),
+        createCard('spade', '4'),
+        createCard('spade', 'A'),
+        createCard('club', 'A')
+      ] as Cards,
+      [
+        createCard('spade', 'A'),
+        createCard('club', 'A'),
+        createCard('spade', '4'),
+        createCard('spade', '3'),
+        createCard('spade', '2')
+      ] as Cards
+    )).toEqual(0);
+
+    expect(compare(
+      [
+        createCard('spade', '2'),
+        createCard('spade', '3'),
+        createCard('spade', '4'),
+        createCard('spade', 'A'),
+        createCard('club', 'A')
+      ] as Cards,
+      [
+        createCard('spade', 'A'),
+        createCard('club', 'A'),
+        createCard('spade', 'K'),
+        createCard('spade', '3'),
+        createCard('spade', '2')
+      ] as Cards
+    )).toEqual(-1);
+
+    expect(compare(
+      [
+        createCard('spade', '2'),
+        createCard('spade', '3'),
+        createCard('spade', 'Q'),
+        createCard('spade', 'A'),
+        createCard('club', 'A')
+      ] as Cards,
+      [
+        createCard('spade', 'A'),
+        createCard('club', 'A'),
+        createCard('spade', '4'),
+        createCard('spade', '3'),
+        createCard('spade', '2')
+      ] as Cards
+    )).toEqual(1);
+  });
+
+  test('case-12', () => {
+    expect(compare(
+      [
+        createCard('spade', '2'),
+        createCard('spade', '3'),
+        createCard('spade', '4'),
+        createCard('spade', 'A'),
+        createCard('spade', 'J')
+      ] as Cards,
+      [
+        createCard('spade', 'A'),
+        createCard('spade', 'J'),
+        createCard('spade', '4'),
+        createCard('spade', '3'),
+        createCard('spade', '2')
+      ] as Cards
+    )).toEqual(0);
+
+    expect(compare(
+      [
+        createCard('spade', '2'),
+        createCard('spade', '3'),
+        createCard('spade', '4'),
+        createCard('spade', 'A'),
+        createCard('spade', 'J')
+      ] as Cards,
+      [
+        createCard('spade', 'A'),
+        createCard('spade', 'J'),
+        createCard('spade', '9'),
+        createCard('spade', '3'),
+        createCard('spade', '2')
+      ] as Cards
+    )).toEqual(-1);
+
+    expect(compare(
+      [
+        createCard('spade', '2'),
+        createCard('spade', '3'),
+        createCard('spade', '4'),
+        createCard('spade', 'A'),
+        createCard('spade', 'J')
+      ] as Cards,
+      [
+        createCard('spade', 'K'),
+        createCard('spade', 'J'),
+        createCard('spade', '4'),
+        createCard('spade', '3'),
+        createCard('spade', '2')
+      ] as Cards
+    )).toEqual(1);
+  });
+
+  test('case-13', () => {
+    expect(compare(
+      [
+        createCard('spade', '2'),
+        createCard('spade', '3'),
+        createCard('club', '4'),
+        createCard('spade', 'A'),
+        createCard('spade', 'J')
+      ] as Cards,
+      [
+        createCard('spade', 'A'),
+        createCard('club', 'J'),
+        createCard('spade', '4'),
+        createCard('spade', '3'),
+        createCard('spade', '2')
+      ] as Cards
+    )).toEqual(0);
+
+    expect(compare(
+      [
+        createCard('spade', '2'),
+        createCard('club', '3'),
+        createCard('spade', '4'),
+        createCard('spade', 'A'),
+        createCard('spade', 'J')
+      ] as Cards,
+      [
+        createCard('spade', 'A'),
+        createCard('spade', 'J'),
+        createCard('spade', '9'),
+        createCard('club', '3'),
+        createCard('spade', '2')
+      ] as Cards
+    )).toEqual(-1);
+
+    expect(compare(
+      [
+        createCard('spade', '2'),
+        createCard('spade', '3'),
+        createCard('club', '4'),
+        createCard('spade', 'A'),
+        createCard('spade', 'J')
+      ] as Cards,
+      [
+        createCard('spade', 'K'),
+        createCard('spade', 'J'),
+        createCard('club', '4'),
+        createCard('spade', '3'),
+        createCard('spade', '2')
+      ] as Cards
+    )).toEqual(1);
+  });
 });

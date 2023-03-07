@@ -298,7 +298,7 @@ function compareCardsModelForSamePattern(lModel: CardsModel, rModel: CardsModel)
     const rGroupedCards = [...r.grouped].sort(compareFn);
     let index = 0;
     while (lGroupedCards[index] != null) {
-      const result = compareCard(lGroupedCards[0][0], rGroupedCards[0][0]);
+      const result = compareCard(lGroupedCards[index][0], rGroupedCards[index][0]);
       if (result !== 0) {
         return result;
       }

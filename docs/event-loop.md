@@ -14,6 +14,7 @@
 - oldestTask
 - taskStartTime
 - hasARenderingOpportunity
+- now
 
 **任务类型：**
 
@@ -41,7 +42,7 @@ TODO
 3. 执行”微任务“环节
 4. 设置`hasARenderingOpportunity`为`false`
 5. 设置`now`为当前时间
-6. 检查`oldestTask`是否为`null`
+6. 检查`oldestTask`是否为`null`，报告“长任务”
 7. 执行渲染（如果是 window event loop ）
 8. 任务X
 

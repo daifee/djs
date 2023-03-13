@@ -28,6 +28,6 @@
 
 ## 未理解
 
-- Character Sets
-- Content Codings
+- Character Sets: 字符集
+- Content Codings: 压缩算法
 - Media Types

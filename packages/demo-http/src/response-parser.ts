@@ -84,10 +84,13 @@ export default class ResponseParser {
     this.print(this.statusLineFragments);
     this.print(this.headersFragments);
     this.print(this.bodyFragments);
+
+    const len = Buffer.byteLength(Buffer.concat(this.bodyFragments));
+    console.log(len);
   }
 
   print(list: Buffer[]): void {
-    const str = Buffer.concat(list).toString('utf-8');
-    console.log(str);
+    const str = Buffer.concat(list);
+    console.log(str[str.length - 1]);
   }
 }
